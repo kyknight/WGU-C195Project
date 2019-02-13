@@ -1,0 +1,55 @@
+/* 
+    Created on : Nov 25, 2018
+    Author     : kyleighknight
+*/
+*{
+    loginSaveAddButtons: #2ECC40;
+    searchButton: #0099FF;
+    errorDeleteButton: #FF2600;
+    cancel-Modify-ExitButton: #E6E9F0;
+    backgroundColor: #A8A8A8;
+    textFieldColor: #DDDDDD;
+}
+
+.root{
+    -fx-background-color: backgroundColor;
+    -fx-font: 14px "Arial";
+}
+
+#loginErrorMessageLabel{
+    color: errorDeleteButton;
+}
+
+#appLabel, #appSumScreenLabel, #addCustomerScreenLabel, #addAppScreenLabel, #modAppScreenLabel,
+#modifyCustomerScreenLabel, #reportScreenLabel{
+    -fx-font: 20px "Arial";
+    -fx-font-weight: bold;
+}
+
+#loginButton, #addCustomerSaveButton, #addAppAddButton, #addAppSaveButton, #mainScreenAddAppButton,
+#mainScreenAddCustButton, #modAppAddButton, #modAppSaveButton, #modifyCustomerUpdateButton,
+#reportRun101Button, #reportRun102Button, #reportRun103Button{
+    -fx-background-color: loginSaveAddButtons;
+}
+#appSumDeleteAppButton, #addAppDeleteButton, #mainScreenRemoveCustButton, #modAppDeleteButton{
+    -fx-background-color: errorDeleteButton;
+}
+#appSumExitButton, #appSumModAppButton, #addCustomerCancelButton, #addAppCancelButton, 
+#mainScreenReportsButton, #mainScreenModCustButton, #mainScreenExitButton, #mainScreenCurrentDateButton,
+#modAppCancelButton, .date-picker, .choice-box, #modifyCustomerCancelButton, #reportExitButton{
+    -fx-background-color: cancel-Modify-ExitButton;
+}
+#appSumAppDetailsButton, #mainScreenAppSumButton{
+    -fx-background-color: searchButton;
+}
+#mainScreenViewToggleButton{
+    -fx-background-color: #66ffc2; /* Seafoam green */
+}
+
+.table-view, .text-field, .text-area .content{
+    -fx-background-color: textFieldColor;
+}
+
+.separator *.line{
+    -fx-border-color: #d1e0e0; /* Super light blue */
+}

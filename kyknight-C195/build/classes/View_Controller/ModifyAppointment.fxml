@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyAppointmentController">
+   <children>
+      <Label fx:id="modAppScreenLabel" layoutX="353.0" layoutY="21.0" text="Modify Scheduled Appointment" />
+      <VBox layoutX="26.0" layoutY="61.0" prefHeight="500.0" prefWidth="400.0">
+         <children>
+            <HBox prefHeight="500.0" prefWidth="400.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="150.0" spacing="33.0">
+                     <children>
+                        <Label fx:id="modAppTypeLabel" text="Type" />
+                        <Label fx:id="modAppTitleLabel" text="Title" />
+                        <Label fx:id="modAppDescriptionLabel" prefHeight="90.0" text="Description" />
+                        <Label fx:id="modAppLocationLabel" text="Location" />
+                        <Label fx:id="modAppContactLabel" text="Contact" />
+                        <Label fx:id="modAppUrlLabel" text="URL" />
+                        <Label fx:id="modAppDateLabel" text="Date" />
+                        <Label fx:id="modAppStartLabel" text="Start Time" />
+                        <Label fx:id="modAppEndLabel" text="End Time" />
+                     </children>
+                     <padding>
+                        <Insets left="25.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <ChoiceBox fx:id="modAppTypeChoiceBox" prefWidth="250.0" />
+                        <TextField fx:id="modAppTitleTextField" prefHeight="30.0" />
+                        <TextField fx:id="modAppDescriptionTextField" prefHeight="100.0" />
+                        <TextField fx:id="modAppLocationTextField" prefHeight="30.0" />
+                        <TextField fx:id="modAppContactTextField" prefHeight="30.0" />
+                        <TextField fx:id="modAppUrlTextField" prefHeight="30.0" />
+                        <DatePicker fx:id="modAppDatePicker" prefHeight="30.0" prefWidth="160.0" />
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <TextField fx:id="modAppStartHourTextField" prefHeight="30.0" prefWidth="40.0" />
+                              <Label text=":">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="modAppStartMinuteTextField" prefHeight="30.0" prefWidth="40.0" />
+                              <ChoiceBox fx:id="modAppStartAMPMChoiceBox" prefHeight="30.0" prefWidth="45.0">
+                                 <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                       <String fx:id="AM" fx:value="AM" />
+                                       <String fx:id="PM" fx:value="PM" />
+                                    </FXCollections>
+                                 </items>
+                              </ChoiceBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <TextField fx:id="modAppEndHourTextField" prefHeight="30.0" prefWidth="40.0" />
+                              <Label text=":">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="modAppEndMinuteTextField" prefHeight="30.0" prefWidth="40.0" />
+                              <ChoiceBox fx:id="modAppEndAMPMChoiceBox" prefHeight="30.0" prefWidth="45.0">
+                                 <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                       <String fx:id="AM1" fx:value="AM" />
+                                       <String fx:id="PM1" fx:value="PM" />
+                                    </FXCollections>
+                                 </items>
+                              </ChoiceBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_RIGHT" layoutX="475.0" layoutY="61.0" prefHeight="478.0" prefWidth="400.0" spacing="5.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="modAppAddTableLabel" text="Appointment List" />
+               </children>
+            </HBox>
+            <TableView fx:id="addModAppAddTableView" prefHeight="150.0" prefWidth="400.0">
+               <columns>
+                  <TableColumn fx:id="modAppAddNameTableCol" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="modAppAddCityTableCol" prefWidth="100.0" text="City" />
+                  <TableColumn fx:id="modAppAddCountryTableCol" prefWidth="100.0" text="Country" />
+                  <TableColumn fx:id="modAppAddPhoneTableCol" prefWidth="100.0" text="Phone #" />
+               </columns>
+            </TableView>
+            <Button fx:id="modAppAddButton" mnemonicParsing="false" text="Add">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="modAppSelectedTableLabel" text="Selected Appointments" />
+               </children>
+            </HBox>
+            <TableView fx:id="addModAppDeleteTableView" prefHeight="150.0" prefWidth="400.0">
+               <columns>
+                  <TableColumn fx:id="modAppDeleteNameTableCol" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="modAppDeleteCityTableCol" prefWidth="100.0" text="City" />
+                  <TableColumn fx:id="modAppDeleteCountryTableCol" prefWidth="100.0" text="Country" />
+                  <TableColumn fx:id="modAppDeletePhoneTableCol" prefWidth="100.0" text="Phone #" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_RIGHT" layoutX="735.0" layoutY="523.0" prefHeight="76.0" prefWidth="140.0">
+         <children>
+            <Button fx:id="modAppDeleteButton" mnemonicParsing="false" text="Delete" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button fx:id="modAppSaveButton" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="modAppCancelButton" mnemonicParsing="false" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label fx:id="modAppCreateDateLabel" layoutX="395.0" layoutY="569.0" text="Created:" />
+      <Label fx:id="modAppCreateByLabel" layoutX="587.0" layoutY="569.0" text="By:" />
+      <Label fx:id="modAppCreateDateGrabLabel" layoutX="454.0" layoutY="569.0" text="yyyy-MM-dd h:mm" />
+      <Label fx:id="modAppCreateByGrabLabel" layoutX="614.0" layoutY="569.0" text="username" />
+   </children>
+</AnchorPane>

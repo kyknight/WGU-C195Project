@@ -1,0 +1,36 @@
+/* 
+    Created on : Nov 25, 2018
+    Author     : kyleighknight
+*/
+*{
+    loginSaveAddButtons: #2ECC40;
+    searchButton: #0099FF;
+    errorDeleteButton: #FF2600;
+    cancel-Modify-ExitButton: #E6E9F0;
+    backgroundColor: #A8A8A8;
+    textFieldColor: #DDDDDD;
+}
+
+.root{
+    -fx-background-color: backgroundColor;
+}
+
+#loginErrorMessageLabel{
+    color: errorDeleteButton;
+}
+
+#appLabel{
+    -fx-font: 20px "Arial";
+    -fx-font-weight: bold;
+}
+#usernameLabel, #passwordLabel, #loginErrorMessageLabel, #loginButton{
+    -fx-font: 14px "Arial";
+}
+
+#loginButton{
+    -fx-background-color: loginSaveAddButtons;
+}
+
+#usernameTextField, #passwordTextField{
+    -fx-background-color: textFieldColor;
+}
