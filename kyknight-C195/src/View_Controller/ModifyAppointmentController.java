@@ -7,11 +7,14 @@ package View_Controller;
 
 import Model.Appointment;
 import static Model.AppointmentList.getAppList;
+//import void Model.Appointment.getType;
 import Model.Customer;
+import Model.CustomerList;
 import static Model.CustomerList.getCustList;
 import static Model.DBManager.modApp;
 import View_Controller.AddAppointmentController;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,11 +44,11 @@ public class ModifyAppointmentController{
     @FXML private Label modAppScreenLabel, modAppTitleLabel, modAppDescriptionLabel, modAppLocationLabel, modAppContactLabel,
             modAppTypeLabel, modAppUrlLabel, modAppDateLabel, modAppStartLabel, modAppEndLabel, modAppAddTableLabel,
             modAppSelectedTableLabel;
-    //created adn updated Labels
+    //created and updated Labels
     @FXML private Label modAppCreateDateLabel, modAppCreateDateGrabLabel, modAppCreateByLabel, modAppCreateByGrabLabel,
             modAppLastUpdateLabel, modAppLastUpdateGrabLabel, modAppLastUpdateByLabel, modAppLastUpdateByGrabLabel;
     //TextFields
-    @FXML private TextField modAppTitleTextField, modAppLocationTextField, modAppContactTextField,
+    @FXML private TextField modAppTypeTextField, modAppTitleTextField, modAppLocationTextField, modAppContactTextField,
             modAppUrlTextField, modAppStartHourTextField, modAppStartMinuteTextField, modAppEndHourTextField, modAppEndMinuteTextField;
     //Textarea
     @FXML private TextArea modAppDescriptionTextField;
@@ -56,7 +59,7 @@ public class ModifyAppointmentController{
     @FXML private DatePicker modAppDatePicker;
     
     //ChoiceBox
-    @FXML private ChoiceBox<String> modAppTypeChoiceBox, modAppStartAMPMChoiceBox, modAppEndAMPMChoiceBox;
+    @FXML private ChoiceBox<String> modAppStartAMPMChoiceBox, modAppEndAMPMChoiceBox;
     
     //TableView
     @FXML private TableView<Customer> addModAppAddTableView;
@@ -82,7 +85,7 @@ public class ModifyAppointmentController{
      * @param event 
      */
     private void ModAppAddButtonPushed(ActionEvent event){
-        //called the method from AddAppointmetnController.java because I'm lazy
+        //called the method from AddAppointmetnController.java
         AddAppointmentController addPushed = new AddAppointmentController();
         addPushed.AddModAppAddButtonPushed(event);
     }
@@ -92,7 +95,7 @@ public class ModifyAppointmentController{
      * @param event 
      */
     private void ModAppDeleteButtonPushed(ActionEvent event){
-        //called the method from AddAppointmetnController.java because I'm lazy
+        //called the method from AddAppointmetnController.java 
         AddAppointmentController deletePushed = new AddAppointmentController();
         deletePushed.AddModAppDeleteButtonPushed(event);
     }
@@ -117,7 +120,7 @@ public class ModifyAppointmentController{
         if (contact.length() == 0 && customer != null){
             contact = customer.getCustName() + ": " + customer.getPhone();
         }
-            String type = modAppTypeChoiceBox.getValue();
+        String type = modAppTypeTextField.getText();
         String url = modAppUrlTextField.getText();
         LocalDate appDate = modAppDatePicker.getValue();
         String startHr = modAppStartHourTextField.getText();
@@ -126,10 +129,12 @@ public class ModifyAppointmentController{
         String endHr = modAppEndHourTextField.getText();
         String endMin = modAppEndMinuteTextField.getText();
         String endAmPm = modAppEndAMPMChoiceBox.getSelectionModel().getSelectedItem();
+        int userId = appointment.getUserId();
+        int custId = appointment.getCustId();
         
         //submit validation of app information
         String errorMessage = Appointment.isAppValid(customer, title, desc, location, appDate, startHr, startMin, 
-                startAmPm, endHr, endMin, endAmPm);
+                startAmPm, endHr, endMin, endAmPm, type);
         
         if (errorMessage.length() > 0){
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -137,6 +142,7 @@ public class ModifyAppointmentController{
             alert.setHeaderText("Error Modifying Appointment");
             alert.setContentText(errorMessage);
             alert.showAndWait();
+            return;
         }
         
         SimpleDateFormat localDateFormat = new SimpleDateFormat("yyy-MM-dd h:mm a");
@@ -154,7 +160,7 @@ public class ModifyAppointmentController{
         ZonedDateTime startUTC = ZonedDateTime.ofInstant(startLocal.toInstant(), ZoneId.of("UTC"));
         ZonedDateTime endUTC = ZonedDateTime.ofInstant(endLocal.toInstant(), ZoneId.of("UTC"));
         //submits info to be added to DB and checks if 'true' is returned
-        if (modApp(appId,customer,title,desc,location,contact,url,startUTC,endUTC)) {
+        if (modApp(appId,customer,title,desc,location,contact,url,startUTC,endUTC,type,userId,custId)) {
             try {
                 Parent appSummaryParent = FXMLLoader.load(getClass().getResource("AppointmentSummary.fxml"));
                 Scene appSummaryScene = new Scene(appSummaryParent);
@@ -165,8 +171,7 @@ public class ModifyAppointmentController{
             catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-        }
+        } 
     }
     
     /**
@@ -174,9 +179,23 @@ public class ModifyAppointmentController{
      * @param event 
      */
     private void ModAppCancelButtonPushed(ActionEvent event){
-        //called the method from AddAppointmentController.java because I'm lazy
+        //called the method from AddAppointmentController.java 
         AddAppointmentController cancelPushed = new AddAppointmentController();
         cancelPushed.AddModAppCancelButtonPushed(event);
+    }
+    
+    /**
+     * This method updates the add table / top table
+     */
+    public void AddModAppAddTableViewUpdate() {
+        addModAppAddTableView.setItems(CustomerList.getCustList());
+    } //take off already selected customer
+
+    /**
+     * This method update the delete table / lower table
+     */
+    public void AddModAppDeleteTableViewUpdate() {
+        addModAppDeleteTableView.setItems(currCust);
     }
     
     /**
@@ -195,7 +214,7 @@ public class ModifyAppointmentController{
         String desc = appointment.getDesc();
         String location = appointment.getLocation();
         String contact = appointment.getContact();
-            String type = appointment.getType();
+        String type = appointment.getType();
         String url = appointment.getUrl();
         Date appDate = appointment.getStartTimestamp();
         
@@ -237,8 +256,7 @@ public class ModifyAppointmentController{
         modAppDescriptionTextField.setText(desc);
         modAppLocationTextField.setText(location);
         modAppContactTextField.setText(contact);
-        
-            modAppTypeChoiceBox.setValue(type);
+        modAppTypeTextField.setText(type);
             //start time
         modAppUrlTextField.setText(url);
         modAppDatePicker.setValue(appLocalDate);
@@ -259,5 +277,15 @@ public class ModifyAppointmentController{
         modAppDeleteCityTableCol.setCellValueFactory(cellData -> cellData.getValue().cityProperty());
         modAppDeleteCountryTableCol.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
         modAppDeletePhoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
+        
+        //updates the tables
+        AddModAppAddTableViewUpdate();
+        AddModAppDeleteTableViewUpdate();
+        
+        //Grabs the created date adn user who created the appointment
+        String createDate = appointment.getCreateDateString();
+        modAppCreateDateGrabLabel.setText(createDate);
+        String createdUser = appointment.getCreatedBy();
+        modAppCreateByGrabLabel.setText(createdUser);
     }      
 }

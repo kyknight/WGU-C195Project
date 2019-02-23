@@ -58,9 +58,10 @@ public class AddCustomerController implements Initializable {
         String zip = addCustomerZipTextField.getText();
         String country = addCustomerCountryTextField.getText();
         String phone = addCustomerPhoneTextField.getText();
+        String state = addCustomerStateTextField.getText();
         
         //customer validation
-        String errorMessage = Customer.isCustValid(custName, address1, city, zip, country, phone);
+        String errorMessage = Customer.isCustValid(custName, address1, city, zip, country, phone, state);
         
         //if errorMessage = true, display error dialog box
         if (errorMessage.length() > 0){

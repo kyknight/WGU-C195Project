@@ -20,7 +20,7 @@
                         <Insets right="35.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="addCustomerIDTextField" promptText="Customer ID" />
+                  <TextField fx:id="addCustomerIDTextField" disable="true" editable="false" promptText="auto gen - Customer ID" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0">
@@ -98,7 +98,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Button fx:id="addCustomerSaveButton" mnemonicParsing="false" onAction="#AddCustomerSaveButtonPushed" text="Save" />
-                  <Button fx:id="addCustomerCancelButton" mnemonicParsing="false" onAction="#AddCustomerCancelButtonPushed" text="Cancel" />
+                  <Button fx:id="addCustomerCancelButton" mnemonicParsing="false" text="Cancel" />
                </children>
             </HBox>
          </children>

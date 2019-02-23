@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="mainScreenGrid" prefHeight="750.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
+<GridPane fx:id="mainScreenGrid" prefHeight="750.0" prefWidth="1100.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="800.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="200.0" />
@@ -42,12 +42,12 @@
       </HBox>
       <TableView fx:id="custTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
         <columns>
-          <TableColumn fx:id="custNameTableColumn" prefWidth="150.0" text="Name" />
-          <TableColumn fx:id="custAddress1TableColumn" prefWidth="175.0" text="Address Line 1" />
-            <TableColumn fx:id="custAddress2TableColumn" prefWidth="150.0" text="Address Line 2" />
-            <TableColumn fx:id="custCityTableColumn" prefWidth="100.0" text="City" />
-            <TableColumn fx:id="custCountryTableColumn" prefWidth="100.0" text="Country" />
-            <TableColumn fx:id="custPhoneTableColumn" prefWidth="100.0" text="Phone" />
+          <TableColumn fx:id="custNameTableCol" prefWidth="150.0" text="Name" />
+          <TableColumn fx:id="custAddress1TableCol" prefWidth="175.0" text="Address Line 1" />
+            <TableColumn fx:id="custAddress2TableCol" prefWidth="150.0" text="Address Line 2" />
+            <TableColumn fx:id="custCityTableCol" prefWidth="100.0" text="City" />
+            <TableColumn fx:id="custCountryTableCol" prefWidth="100.0" text="Country" />
+            <TableColumn fx:id="custPhoneTableCol" prefWidth="100.0" text="Phone" />
         </columns>
          <GridPane.margin>
             <Insets bottom="20.0" left="20.0" top="20.0" />

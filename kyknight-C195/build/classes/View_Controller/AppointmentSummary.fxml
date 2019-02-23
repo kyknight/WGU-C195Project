@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="View_Controller.AppointmentSummaryController">
+<GridPane alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentSummaryController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
@@ -26,7 +26,7 @@
          <children>
             <AnchorPane prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="appSumScreenLabel" layoutX="275.0" layoutY="14.0" text="Appointment Summary" />
+                  <Label fx:id="appSumScreenLabel" layoutX="259.0" layoutY="14.0" stylesheets="@style.css" text="Appointment Summary" />
                </children>
             </AnchorPane>
             <TableView fx:id="appSumTableview" prefHeight="225.0" prefWidth="500.0">
@@ -56,55 +56,55 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="64.0">
                <children>
                   <Label fx:id="appSumTitleLabel" text="Title:" />
-                  <Label fx:id="appSumDetailTitleLabel" text="Label" />
+                  <Label fx:id="appSumDetailTitleLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label fx:id="appSumDescLabel" text="Description:" />
-                  <Label fx:id="appSumDetailDescLabel" text="Label" />
+                  <Label fx:id="appSumDetailDescLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="214.0" prefHeight="100.0" prefWidth="200.0" spacing="38.0">
                <children>
                   <Label fx:id="appSumLocationLabel" text="Location:" />
-                  <Label fx:id="appSumDetailLocationLabel" text="Label" />
+                  <Label fx:id="appSumDetailLocationLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="218.0" prefHeight="100.0" prefWidth="200.0" spacing="42.0">
                <children>
                   <Label fx:id="appSumContactLabel" text="Contact:" />
-                  <Label fx:id="appSumDetailContactLabel" text="Label" />
+                  <Label fx:id="appSumDetailContactLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="223.0" prefHeight="100.0" prefWidth="200.0" spacing="66.0">
                <children>
                   <Label fx:id="appSumUrlLabel" text="URL:" />
-                  <Label fx:id="appSumDetailUrlLabel" text="Label" />
+                  <Label fx:id="appSumDetailUrlLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="228.0" prefHeight="100.0" prefWidth="200.0" spacing="63.0">
                <children>
                   <Label fx:id="appSumDateLabel" text="Date:" />
-                  <Label fx:id="appSumDetailDateLabel" text="Label" />
+                  <Label fx:id="appSumDetailDateLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="233.0" prefHeight="100.0" prefWidth="200.0" spacing="28.0">
                <children>
                   <Label fx:id="appSumStartLabel" text="Start Time:" />
-                  <Label fx:id="appSumDetailStartLabel" text="Label" />
+                  <Label fx:id="appSumDetailStartLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="238.0" prefHeight="100.0" prefWidth="200.0" spacing="34.0">
                <children>
                   <Label fx:id="appSumEndLabel" text="End Time:" />
-                  <Label fx:id="appSumDetailEndLabel" text="Label" />
+                  <Label fx:id="appSumDetailEndLabel" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="243.0" prefHeight="100.0" prefWidth="200.0" spacing="23.0">
                <children>
                   <Label fx:id="appSumCreatedByLabel" text="Created By:" />
-                  <Label fx:id="appSumDetailCreatedByLabel" text="Label" />
+                  <Label fx:id="appSumDetailCreatedByLabel" />
                </children>
             </HBox>
          </children>

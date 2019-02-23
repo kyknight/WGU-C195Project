@@ -154,7 +154,8 @@ public class WeeklyCalendarView {
             if (appCount != 0) {
                 Text appointmentsForDay = new Text(String.valueOf(appCount));
                 appointmentsForDay.setFont(Font.font(30));
-                appointmentsForDay.setFill(Color.AQUA);
+                appointmentsForDay.setTextAlignment(TextAlignment.CENTER);
+                appointmentsForDay.setFill(Color.DARKCYAN);
 
                 ap.getChildren().add(appointmentsForDay);
                 ap.setTopAnchor(appointmentsForDay, 20.0);

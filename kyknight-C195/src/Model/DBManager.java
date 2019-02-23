@@ -36,7 +36,7 @@ public class DBManager {
 
     private static final String driver = "com.mysql.jdbc.Driver";
     private static final String db = "U04qVf";
-    private static final String url = "jdbc:mysql://52.206.157.109/" + db;
+    private static final String dbUrl = "jdbc:mysql://52.206.157.109/" + db;
     private static final String user = "U04qVf";
     private static final String pass = "53688319253";
 
@@ -88,7 +88,7 @@ public class DBManager {
 
         //
         try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+            Connection conn = DriverManager.getConnection(dbUrl, user, pass);
             Statement stmt = conn.createStatement();
             //gets the userId for entered username
             ResultSet userIdSet = stmt.executeQuery("SELECT userId FROM user WHERE userName = '" + userName + "'");
@@ -113,7 +113,7 @@ public class DBManager {
      */
     private static boolean checkPassword(int userId, String password) {
         try {
-            Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+            Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
             Statement stmt = conn.createStatement();
             
             //grabs the password by userId
@@ -190,7 +190,7 @@ public class DBManager {
      * This method updates the custList after the db has been changed
      */
     public static void updateCustList() {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ObservableList<Customer> custList = CustomerList.getCustList();
             custList.clear();
@@ -203,7 +203,7 @@ public class DBManager {
             //creates a customer object for each custId in list then ass Customer to custList
             for (int custId : custIdList) {
                 Customer customer = new Customer();
-                //gets teh customer info from db tehn sets to Customer object
+                //gets teh customer info from db then sets to Customer object
                 ResultSet custResultSet = stmt.executeQuery("SELECT customerName, active, addressId FROM customer WHERE customerId = '" + custId + "'");
                 custResultSet.next();
                 String custName = custResultSet.getString(1);
@@ -216,12 +216,12 @@ public class DBManager {
                 //gets the address info from db then sets to Customer object
                 ResultSet addressResultSet = stmt.executeQuery("SELECT address, address2, postalCode, phone, cityId FROM address WHERE addressId = '" + addressId +"'");
                 addressResultSet.next();
-                String address1 = addressResultSet.getString(1);
+                String address = addressResultSet.getString(1);
                 String address2 = addressResultSet.getString(2);
                 String zipCode = addressResultSet.getString(3);
                 String phone = addressResultSet.getString(4);
                 int cityId = addressResultSet.getInt(5);
-                customer.setAddress1(address1);
+                customer.setAddress1(address);
                 customer.setAddress2(address2);
                 customer.setZipCode(zipCode);
                 customer.setPhone(phone);
@@ -242,6 +242,7 @@ public class DBManager {
                 custList.add(customer);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error Connecting to Database");
@@ -256,24 +257,24 @@ public class DBManager {
      * alert that the customer already exists.
      *
      * @param custName
-     * @param address1
+     * @param address
      * @param address2
      * @param city
      * @param country
      * @param zipCode
      * @param phone
      */
-    public static void addNewCust(String custName, String address1, String address2, String city, String country,
+    public static void addNewCust(String custName, String address, String address2, String city, String country,
             String zipCode, String phone) {
         //gets the Id's for country, city, and address
         try {
-            int countryId = calcCountryId(country);
+            int countryId = calcCountryId(country); 
             int cityId = calcCityId(city, countryId);
-            int addressId = calcAddressId(address1, address2, zipCode, phone, cityId);
+            int addressId = calcAddressId(address, address2, zipCode, phone, cityId); 
             //checks whether or not a customer is new or already exists in db
             if (checkIfCustExists(custName, addressId)) {
                 //db connection
-                try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+                try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                         Statement stmt = conn.createStatement()) {
                     ResultSet activeResultSet = stmt.executeQuery("SELECT active FROM customer WHERE customerName = '" 
                             + custName + "' AND addressId = '" + addressId + "'");
@@ -291,11 +292,14 @@ public class DBManager {
                         //sets customer to active if currently set to inactive
                         setCustToActive(custName, addressId);
                     }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else {
                 addCustomer(custName, addressId);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             //if no db connection, alert displays that there needs to be a bd connection
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -314,7 +318,7 @@ public class DBManager {
      * @return
      */
     public static int calcCountryId(String country) {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet countryIdCheck = stmt.executeQuery("SELECT countryId FROM country WHERE country = '" + country + "'");
             //checks if already exits then returns countryId if it does
@@ -354,7 +358,7 @@ public class DBManager {
      * @return
      */
     public static int calcCityId(String city, int countryId) {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet cityIdCheck = stmt.executeQuery("SELECT cityId FROM city WHERE city = '" + city + "' AND countryid = '" + countryId + "'");
             //checks if already exits then returns countryId if it does
@@ -390,17 +394,17 @@ public class DBManager {
      * cityId. If not, creates new addressId entry and returns the new
      * addressId.
      *
-     * @param address1
+     * @param address
      * @param address2
      * @param zipCode
      * @param phone
      * @param cityId
      * @return
      */
-    public static int calcAddressId(String address1, String address2, String zipCode, String phone, int cityId) {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+    public static int calcAddressId(String address, String address2, String zipCode, String phone, int cityId) {
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
-            ResultSet addressIdCheck = stmt.executeQuery("SELECT addressId FROM address WHERE address = '" + address1 + "' AND address2 = '" 
+            ResultSet addressIdCheck = stmt.executeQuery("SELECT addressId FROM address WHERE address = '" + address + "' AND address2 = '" 
                     + address2 + "' AND postalCode = '" + zipCode + "' AND phone = '" + phone + "' AND cityId = '" + cityId + "'");
             //checks if already exits then returns countryId if it does
             if (addressIdCheck.next()) {
@@ -420,7 +424,7 @@ public class DBManager {
                     addressId = 1;
                 }
                 //creates new entry with new addressId value
-                stmt.executeUpdate("INSERT INTO address VALUES ('" + addressId + "', '" + address1 + "', '" + address2 + "', '" + cityId + "', "
+                stmt.executeUpdate("INSERT INTO address VALUES ('" + addressId + "', '" + address + "', '" + address2 + "', '" + cityId + "', "
                         + "'" + zipCode + "', '" + phone + "', CURRENT_DATE, '" + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')");
                 return addressId;
             }
@@ -440,7 +444,7 @@ public class DBManager {
      * @throws SQLException
      */
     private static boolean checkIfCustExists(String custName, int addressId) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet custIdCheck = stmt.executeQuery("SELECT customerId FROM customer WHERE customerName = '" + custName + "' "
                     + "AND addressId = '" + addressId + "'");
@@ -452,7 +456,7 @@ public class DBManager {
                 custIdCheck.close();
                 return false;
             }
-        }
+        } 
     }
 
     /**
@@ -463,7 +467,7 @@ public class DBManager {
      * @param addressId
      */
     public static void setCustToActive(String custName, int addressId) {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
 
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -491,7 +495,7 @@ public class DBManager {
      * @throws SQLException
      */
     private static void addCustomer(String custName, int addressId) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet allCustId = stmt.executeQuery("SELECT customerId FROM customer ORDER BY customerId");
             int custId;
@@ -504,8 +508,10 @@ public class DBManager {
                 custId = 1;
             }
             //creates new custId entry
-            stmt.executeUpdate("INSERT INTO customer VALUES ('" + custId + "', '" + custName + "', '" + addressId + "', 1, "
-                    + "CURRENT_DATE, '" + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')");
+            stmt.executeUpdate("INSERT INTO customer VALUES ('" + custId + "', '" + custName + "', '" + addressId + "', 1, CURRENT_DATE, '" 
+                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')"); // Problems
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -515,7 +521,7 @@ public class DBManager {
      *
      * @param custId
      * @param custName
-     * @param address1
+     * @param address
      * @param address2
      * @param city
      * @param country
@@ -523,12 +529,12 @@ public class DBManager {
      * @param phone
      * @return
      */
-    public static int modCustomer(int custId, String custName, String address1, String address2,
+    public static int modCustomer(int custId, String custName, String address, String address2,
             String city, String country, String zipCode, String phone) {
         try {
             int countryId = calcCountryId(country);
             int cityId = calcCityId(city, countryId);
-            int addressId = calcAddressId(address1, address2, zipCode, phone, cityId);
+            int addressId = calcAddressId(address, address2, zipCode, phone, cityId);
             //checks if customer already exists in the dd
             if (checkIfCustExists(custName, addressId)) {
                 //if customer already exists, get custId and use custId to get and return their active status
@@ -542,6 +548,7 @@ public class DBManager {
                 return -1;
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error Modifying Customer");
@@ -560,13 +567,13 @@ public class DBManager {
      * @throws SQLException
      */
     private static int getCustId(String custName, int addressId) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
-            ResultSet custIdResultSet = stmt.executeQuery("SELECT customerId FROM customer WHERE customerName = '" + custName + "'AND addressId = '" + addressId + "'");
+            ResultSet custIdResultSet = stmt.executeQuery("SELECT customerId FROM customer WHERE customerName = '" + custName + "' AND addressId = '" + addressId + "'");
             custIdResultSet.next();
             int custId = custIdResultSet.getInt(1);
             return custId;
-        }
+        } 
     }
 
     /**
@@ -577,13 +584,13 @@ public class DBManager {
      * @throws SQLException
      */
     private static int getActiveStatus(int custId) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet activeResultSet = stmt.executeQuery("SELECT active FROM customer WHERE customerId = '" + custId + "'");
             activeResultSet.next();
             int active = activeResultSet.getInt(1);
             return active;
-        }
+        } 
     }
 
     /**
@@ -595,10 +602,12 @@ public class DBManager {
      * @throws SQLException
      */
     private static void updateCust(int custId, String custName, int addressId) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("UPDATE customer SET customerName = '" + custName + "', addressId = '" + addressId + "', "
                     + "lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = '" + currUser + "' WHERE customerId = '" + custId + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -618,9 +627,10 @@ public class DBManager {
         Optional<ButtonType> result = alert.showAndWait();
         //sets the customer to inactive is 'OK' button is selected
         if (result.get() == ButtonType.OK) {
-            try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass); Statement stmt = conn.createStatement()) {
+            try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass); Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate("UPDATE customer SET active = 0 WHERE customerId = '" + custId + "'");
             } catch (SQLException e) {
+                e.printStackTrace();
                 Alert alert2 = new Alert(AlertType.INFORMATION);
                 alert2.setTitle("Error");
                 alert2.setHeaderText("Error Modifying Customer");
@@ -635,7 +645,7 @@ public class DBManager {
      * This method updates the appList with current appointments to occur.
      */
     public static void updateAppList() {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass); Statement stmt = conn.createStatement()) {
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass); Statement stmt = conn.createStatement()) {
             ObservableList<Appointment> appList = AppointmentList.getAppList();
             appList.clear();
             //creates appId list for all future appointments
@@ -646,7 +656,7 @@ public class DBManager {
             }
             //creates Appointment object for each appId on list and adds to appList
             for (int appId : appIdList) {
-                appResultSet = stmt.executeQuery("SELECT customerId, title, description, location, contact, url, start, end, createdBy FROM appointment WHERE appointmentId = '" + appId + "'");
+                appResultSet = stmt.executeQuery("SELECT customerId, title, description, location, contact, url, start, end, createdBy, type, createDate, userId FROM appointment WHERE appointmentId = '" + appId + "'");
                 appResultSet.next();
                 int custId = appResultSet.getInt(1);
                 String title = appResultSet.getString(2);
@@ -657,17 +667,21 @@ public class DBManager {
                 Timestamp startTimestamp = appResultSet.getTimestamp(7);
                 Timestamp endTimestamp = appResultSet.getTimestamp(8);
                 String createdBy = appResultSet.getString(9);
+                String type = appResultSet.getString(10);
+                Timestamp createDate = appResultSet.getTimestamp(11);
+                int userId = appResultSet.getInt(12);
 
                 DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
                 utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 java.util.Date startDate = utcFormat.parse(startTimestamp.toString());
                 java.util.Date endDate = utcFormat.parse(endTimestamp.toString());
 
-                Appointment app = new Appointment(appId, custId, title, desc, location, contact, url, startTimestamp, endTimestamp, startDate, endDate, createdBy);
+                Appointment app = new Appointment(appId, custId, userId, title, desc, location, contact, url, startTimestamp, endTimestamp, startDate, endDate, createdBy, type, createDate);
 
                 appList.add(app);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error Adding Appointment");
@@ -689,10 +703,12 @@ public class DBManager {
      * @param url
      * @param startUTC
      * @param endUTC
+     * @param type
+     * @param userId
      * @return
      */
     public static boolean addNewApp(Customer customer, String title, String desc, String location, String contact,
-            String url, ZonedDateTime startUTC, ZonedDateTime endUTC) {
+            String url, ZonedDateTime startUTC, ZonedDateTime endUTC, String type, int userId) {
         //ZonedDateTimes to Timestamp
         String startUTCString = startUTC.toString();
         startUTCString = startUTCString.substring(0, 10) + " " + startUTCString.substring(11, 16) + ":00";
@@ -711,7 +727,8 @@ public class DBManager {
             return check;
         } /* no overlap = new appoiment created */ else {
             int custId = customer.getCustId();
-            addApp(custId, title, desc, location, contact, url, startTimestamp, endTimestamp);
+            //int userId = userId.getUserId();
+            addApp(custId, title, desc, location, contact, url, startTimestamp, endTimestamp, type, userId);
             check = true;
             return check;
         }
@@ -768,10 +785,10 @@ public class DBManager {
      * @param endTimestamp
      */
     private static void addApp(int custId, String title, String desc, String location, String contact, String url,
-            Timestamp startTimestamp, Timestamp endTimestamp) {
-        try (Connection conn = (Connection) DriverManager.getConnection(DBManager.url, user, pass);
+            Timestamp startTimestamp, Timestamp endTimestamp, String type, int userId) {
+        try (Connection conn = (Connection) DriverManager.getConnection(DBManager.dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
-            ResultSet allAppId = stmt.executeQuery("SELECT appointmentId FROM appointment Order BY appList");
+            ResultSet allAppId = stmt.executeQuery("SELECT appointmentId FROM appointment Order BY appointmentId");
             int appId;
             //grabs the last appId value and adds one to the new appointment for the new appId
             if (allAppId.last()) {
@@ -784,8 +801,9 @@ public class DBManager {
             //creates a new entry with the new appId
             stmt.executeUpdate("INSERT INTO appointment VALUES ('" + appId + "', '" + custId + "', '" + title + "', '"
                     + desc + "', '" + location + "', '" + contact + "', '" + url + "', '" + startTimestamp + "', '" + endTimestamp + "', CURRENT_DATE, '" 
-                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')");
+                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "', '" + type + "', '" + userId + "')"); //need to add userId
         } catch (SQLException e) {
+            e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error Adding Appointment");
@@ -807,17 +825,37 @@ public class DBManager {
      * @param url
      * @param startUTC
      * @param endUTC
+     * @param type
      * @return
      */
     public static boolean modApp(int appId, Customer customer, String title, String desc, String location, String contact,
-            String url, ZonedDateTime startUTC, ZonedDateTime endUTC) {
+            String url, ZonedDateTime startUTC, ZonedDateTime endUTC, String type, int userId, int custId) {
         try {
-            addNewApp(customer, title, desc, location, contact, url, startUTC, endUTC);
-            return check;
+            String startUTCString = startUTC.toString();
+            startUTCString = startUTCString.substring(0,10) + " " + startUTCString.substring(11,16) + ":00";
+            Timestamp startTimestamp = Timestamp.valueOf(startUTCString);
+            String endUTCString = endUTC.toString();
+            endUTCString = endUTCString.substring(0, 10) + " " + endUTCString.substring(11, 16) + ":00";
+            Timestamp endTimestamp = Timestamp.valueOf(endUTCString);
+            // Check if appointment overlaps with other existing appointments. Show alert and return false if it does.
+            if (checkAppOverlapOtherApp(startTimestamp, endTimestamp)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Modifying Appointment");
+                alert.setContentText("Oops... Appointment times entered overlap another appointment. Please select an appropriate time.");
+                alert.showAndWait();
+                return false;
+            } else {
+                // If overlap doesn't occur, update appointment entry and return true
+                int customerId = customer.getCustId();
+                updateApp(appId, customerId, title, desc, location, contact, url, startTimestamp, endTimestamp);
+                return true;
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
-            alert.setHeaderText("Error Adding Appointment");
+            alert.setHeaderText("Error Modifying Appointment");
             alert.setContentText("This function requires a connection to the database.");
             alert.showAndWait();
             return false;
@@ -840,11 +878,13 @@ public class DBManager {
      */
     private static void updateApp(int appId, int custId, String title, String desc, String location, String contact,
             String url, Timestamp startTimestamp, Timestamp endTimestamp) throws SQLException {
-        try (Connection conn = (Connection) DriverManager.getConnection(DBManager.url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(DBManager.dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("UPDATE appointment SET customerId = '" + custId + "', title = '" + title + "', description = '" + desc + "', location = '" 
                     + location + "', contact = '" + contact + "', url = '" + url + "', start = '" + startTimestamp + "', end = '" + endTimestamp + 
                     "', lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = '" + currUser + "' WHERE appointmentId = '" + appId + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -902,10 +942,11 @@ public class DBManager {
         alert.setContentText("Are you sure you want to delete this appointment from the database?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+            try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                     Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate("DELETE FROM appointment WHERE appointmentId = '" + appId + "'");
             } catch (Exception e) {
+                e.printStackTrace();
                 Alert alert2 = new Alert(AlertType.INFORMATION);
                 alert2.setTitle("Error");
                 alert2.setHeaderText("Error Modifying Appointment");
@@ -1105,7 +1146,7 @@ public class DBManager {
      * with a customer. Garbage Collector method.
      */
     private static void cleanDatabase() {
-        try (Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet addressIdResultSet = stmt.executeQuery("SELECT DISTINCT addressId FROM customer ORDER BY addressId");
             ArrayList<Integer> addressIdListFromCust = new ArrayList<>();

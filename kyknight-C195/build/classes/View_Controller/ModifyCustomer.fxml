@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ModifyCustomerController">
    <children>
-      <Label fx:id="modifyCustomerScreenLabel" layoutX="256.0" layoutY="22.0" text="Modify Customer" />
+      <Label fx:id="modifyCustomerScreenLabel" layoutX="218.0" layoutY="25.0" text="Modify Customer" />
       <VBox alignment="CENTER" layoutX="75.0" layoutY="86.0" prefHeight="400.0" prefWidth="450.0">
          <children>
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0">
@@ -20,7 +20,7 @@
                         <Insets right="35.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="modifyCustomerIDTextField" promptText="Customer ID" />
+                  <TextField fx:id="modifyCustomerIDTextField" disable="true" editable="false" promptText="auto gen - Customer ID" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0">

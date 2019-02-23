@@ -13,24 +13,43 @@
 
 .root{
     -fx-background-color: backgroundColor;
+    -fx-font: 14px "Arial";
 }
 
 #loginErrorMessageLabel{
     color: errorDeleteButton;
 }
 
-#appLabel{
+#appLabel, #appSumScreenLabel, #addCustomerScreenLabel, #addAppScreenLabel, #modAppScreenLabel,
+#modifyCustomerScreenLabel, #reportScreenLabel{
     -fx-font: 20px "Arial";
     -fx-font-weight: bold;
 }
-#usernameLabel, #passwordLabel, #loginErrorMessageLabel, #loginButton{
-    -fx-font: 14px "Arial";
-}
 
-#loginButton{
+#loginButton, #addCustomerSaveButton, #addAppAddButton, #addAppSaveButton, #mainScreenAddAppButton,
+#mainScreenAddCustButton, #modAppAddButton, #modAppSaveButton, #modifyCustomerUpdateButton,
+#reportRun101Button, #reportRun102Button, #reportRun103Button{
     -fx-background-color: loginSaveAddButtons;
 }
+#appSumDeleteAppButton, #addAppDeleteButton, #mainScreenRemoveCustButton, #modAppDeleteButton{
+    -fx-background-color: errorDeleteButton;
+}
+#appSumExitButton, #appSumModAppButton, #addCustomerCancelButton, #addAppCancelButton, 
+#mainScreenReportsButton, #mainScreenModCustButton, #mainScreenExitButton, #mainScreenCurrentDateButton,
+#modAppCancelButton, .date-picker, .choice-box, #modifyCustomerCancelButton, #reportExitButton{
+    -fx-background-color: cancel-Modify-ExitButton;
+}
+#appSumAppDetailsButton, #mainScreenAppSumButton{
+    -fx-background-color: searchButton;
+}
+#mainScreenViewToggleButton{
+    -fx-background-color: #66ffc2; /* Seafoam green */
+}
 
-#usernameTextField, #passwordTextField{
+.table-view, .text-field, .text-area .content{
     -fx-background-color: textFieldColor;
+}
+
+.separator *.line{
+    -fx-border-color: #d1e0e0; /* Super light blue */
 }

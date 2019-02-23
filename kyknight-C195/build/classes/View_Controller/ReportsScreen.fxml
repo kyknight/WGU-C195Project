@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ReportsScreenController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ReportsScreenController">
    <children>
-      <Label fx:id="reportScreenLabel" layoutX="276.0" layoutY="25.0" text="Reports" />
+      <Label fx:id="reportScreenLabel" layoutX="262.0" layoutY="26.0" text="Reports" />
       <VBox alignment="TOP_CENTER" layoutX="101.0" layoutY="77.0" prefHeight="300.0" prefWidth="400.0">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
@@ -20,7 +20,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="reportRun101Button" mnemonicParsing="false" prefWidth="100.0" text="Run APP101" />
+                  <Button fx:id="reportRun101Button" mnemonicParsing="false" prefWidth="105.0" text="Run APP101" />
                </children>
             </VBox>
             <Separator prefWidth="200.0">
@@ -36,7 +36,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="reportRun102Button" mnemonicParsing="false" prefWidth="100.0" text="Run APP102" />
+                  <Button fx:id="reportRun102Button" mnemonicParsing="false" prefWidth="105.0" text="Run APP102" />
                </children>
             </VBox>
             <Separator prefWidth="200.0">
@@ -52,7 +52,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="reportRun103Button" mnemonicParsing="false" prefWidth="100.0" text="Run APP103" />
+                  <Button fx:id="reportRun103Button" mnemonicParsing="false" prefWidth="105.0" text="Run APP103" />
                </children>
             </VBox>
             <Separator prefWidth="200.0" />

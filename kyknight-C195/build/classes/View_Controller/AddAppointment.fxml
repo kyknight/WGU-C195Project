@@ -9,15 +9,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddAppointmentController">
    <children>
-      <Label fx:id="addAppScreenLabel" layoutX="380.0" layoutY="25.0" text="Schedule Appointment" />
+      <Label fx:id="addAppScreenLabel" layoutX="341.0" layoutY="25.0" text="Schedule Appointment" />
       <VBox layoutX="21.0" layoutY="61.0" prefHeight="500.0" prefWidth="400.0">
          <children>
             <HBox prefHeight="500.0" prefWidth="400.0">
@@ -40,9 +41,9 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <ChoiceBox fx:id="addAppTypeChoiceBox" prefWidth="250.0" />
+                        <TextField fx:id="addAppTypeTextField" />
                         <TextField fx:id="addAppTitleTextField" prefHeight="30.0" />
-                        <TextField fx:id="addAppDescriptionTextField" prefHeight="100.0" />
+                        <TextArea fx:id="addAppDescriptionTextField" prefHeight="100.0" prefWidth="200.0" wrapText="true" />
                         <TextField fx:id="addAppLocationTextField" prefHeight="30.0" />
                         <TextField fx:id="addAppContactTextField" prefHeight="30.0" />
                         <TextField fx:id="addAppUrlTextField" prefHeight="30.0" />
@@ -95,7 +96,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="addAppAddTableLabel" text="Label" />
+                  <Label fx:id="addAppAddTableLabel" text="Customers" />
                </children>
             </HBox>
             <TableView fx:id="addModAppAddTableView" prefHeight="150.0" prefWidth="400.0">
@@ -112,7 +113,7 @@
                </VBox.margin></Button>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="addAppSelectedTableLabel" text="Label" />
+                  <Label fx:id="addAppSelectedTableLabel" text="Added Customers" />
                </children>
             </HBox>
             <TableView fx:id="addModAppDeleteTableView" prefHeight="150.0" prefWidth="400.0">

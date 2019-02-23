@@ -70,7 +70,7 @@ public class ModifyCustomerController implements Initializable {
         String phone = modifyCustomerPhoneTextField.getText();
         
         // customer validation
-        String errorMessage = Customer.isCustValid(custName, address1, city, country, zip, phone);
+        String errorMessage = Customer.isCustValid(custName, address1, city, country, zip, phone, state);
         
         // if errorMessage = true, display error dialog box
         if (errorMessage.length() > 0){
@@ -101,7 +101,6 @@ public class ModifyCustomerController implements Initializable {
         
         //Return to main screen
         try {
-    //SIMPLY!!!!!!
             Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
             Scene mainScreenScene = new Scene(mainScreenParent);
             Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -120,6 +119,8 @@ public class ModifyCustomerController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -130,23 +131,26 @@ public class ModifyCustomerController implements Initializable {
         customer = getCustList().get(custIndexMod);
         
         //grabs current customer information
+        Integer custId = customer.getCustId();
         String custName = customer.getCustName();
         String address1 = customer.getAddress1();
         String address2 = customer.getAddress2();
         String city = customer.getCity();
+        //String state = customer.getState();
         String country = customer.getCountry();
         String zip = customer.getZipcode();
         String phone = customer.getPhone();
         
         //populates the textfields
-        modifyCustomerNameTextField.getText();
-        modifyCustomerAddress1TextField.getText();
-        modifyCustomerAddress2TextField.getText();
-        modifyCustomerCityTextField.getText();
-        modifyCustomerStateTextField.getText();
-        modifyCustomerCountryTextField.getText();
-        modifyCustomerZipTextField.getText();
-        modifyCustomerPhoneTextField.getText();
+        modifyCustomerIDTextField.setText(String.valueOf(custId));
+        modifyCustomerNameTextField.setText(custName);
+        modifyCustomerAddress1TextField.setText(address1);
+        modifyCustomerAddress2TextField.setText(address2);
+        modifyCustomerCityTextField.setText(city);
+        //modifyCustomerStateTextField.setText(state);
+        modifyCustomerCountryTextField.setText(country);
+        modifyCustomerZipTextField.setText(zip);
+        modifyCustomerPhoneTextField.setText(phone);
     }    
     
 }

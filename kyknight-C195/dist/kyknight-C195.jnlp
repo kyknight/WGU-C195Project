@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="kyknight-C195.jar" size="1993755" download="eager" />
+    <jar href="kyknight-C195.jar" size="1994632" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="834091" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.47.jar" size="1007502" download="eager" />
   </resources>

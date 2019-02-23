@@ -20,7 +20,7 @@
                         <Insets right="35.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="modifyCustomerIDTextField" promptText="Customer ID" />
+                  <TextField fx:id="modifyCustomerIDTextField" disable="true" editable="false" promptText="auto gen - Customer ID" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0">

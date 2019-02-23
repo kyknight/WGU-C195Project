@@ -41,7 +41,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <ChoiceBox fx:id="addAppTypeChoiceBox" prefWidth="250.0" />
+                        <TextField fx:id="addAppTypeTextField" />
                         <TextField fx:id="addAppTitleTextField" prefHeight="30.0" />
                         <TextArea fx:id="addAppDescriptionTextField" prefHeight="100.0" prefWidth="200.0" wrapText="true" />
                         <TextField fx:id="addAppLocationTextField" prefHeight="30.0" />

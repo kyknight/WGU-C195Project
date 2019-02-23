@@ -138,18 +138,19 @@ public class MonthlyCalendarView {
                 Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
                 calendar.setTime(appDate);
                 int appYear = calendar.get(Calendar.YEAR);
-                int appMonth = calendar.get(Calendar.MONTH);
+                int appMonth = calendar.get(Calendar.MONTH) + 1;
                 int appDay = calendar.get(Calendar.DAY_OF_MONTH);
                 if(calendarDateYear == appYear && calendarDateMonth == appMonth &&
                         calendarDateDay == appDay){
                     appCount++;
                 }
             }
-            //adds to appointment count if appointment occurs on viewed day
+            //adds to appointment count if appointment is on viewed day
             if (appCount != 0){
                 Text dayApp = new Text(String.valueOf(appCount));
-                dayApp .setFont(Font.font(30));
-                dayApp.setFill(Color.AQUA);
+                dayApp.setFont(Font.font(30));
+                dayApp.setTextAlignment(TextAlignment.CENTER);
+                dayApp.setFill(Color.DARKCYAN);
                 
                 ap.getChildren().add(dayApp);
                 ap.setTopAnchor(dayApp, 20.0);

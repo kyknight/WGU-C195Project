@@ -111,7 +111,7 @@ public class MainScreenController implements Initializable {
      */
     private void MainScreenReportsButtonPushed(ActionEvent event){
         try {
-            Parent reportsParent = FXMLLoader.load(getClass().getResource("Reports.fxml"));
+            Parent reportsParent = FXMLLoader.load(getClass().getResource("ReportsScreen.fxml"));
             Scene reportsScene = new Scene(reportsParent);
             Stage reportsStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             reportsStage.setScene(reportsScene);
@@ -131,7 +131,7 @@ public class MainScreenController implements Initializable {
     private void MainScreenCurrentDateButtonPushed(ActionEvent event){
         //calendar in monthly view?
         //yes
-        if(viewMonthly){
+        if(viewMonthly == true){
             mainScreenGrid.getChildren().remove(monthlyCalendarView);
             //grabbing current calendar view
             YearMonth currentYearMonth = YearMonth.now();
@@ -157,7 +157,7 @@ public class MainScreenController implements Initializable {
     private void MainScreenViewToggleCalendarButtonPushed(ActionEvent event){
         //calendar in monthly view?
         //yes
-        if(viewMonthly){
+        if(viewMonthly == true){
             mainScreenGrid.getChildren().remove(monthlyCalendarView);
             //grabbing current year-month calendar view
             YearMonth currentYearMonth = monthlyCalendar.getCurrentMonth();
@@ -171,12 +171,13 @@ public class MainScreenController implements Initializable {
             //changes the button to say 'View Monthly View'
             mainScreenViewToggleButton.setText("Monthly View");
             viewMonthly = false;
-        } /* no */ else{
+        } /* no */ else {
             mainScreenGrid.getChildren().remove(weeklyCalendarView);
             LocalDate currentLocalDate = weeklyCalendar.getCurrentLocalDate();
             YearMonth currentYearMonth = YearMonth.from(currentLocalDate);
             monthlyCalendar = new MonthlyCalendarView(currentYearMonth);
             monthlyCalendarView = monthlyCalendar.getView();
+            mainScreenGrid.add(monthlyCalendarView,0,0);
             mainScreenViewToggleButton.setText("Weekly View");
             viewMonthly = true;
         }
@@ -293,6 +294,8 @@ public class MainScreenController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -19,7 +19,7 @@ import javafx.beans.property.StringProperty;
 public class Customer {
     
     private IntegerProperty custId, active, addressId, cityId, countryId;
-    private StringProperty custName, address1, address2, zipCode, phone, city, country;
+    private StringProperty custName, address1, address2, zipCode, phone, city, state, country;
     
     /**
      * This is a constructor
@@ -37,6 +37,7 @@ public class Customer {
         city = new SimpleStringProperty();
         countryId = new SimpleIntegerProperty();
         country = new SimpleStringProperty();
+        state = new SimpleStringProperty();
     }
     
     //properties
@@ -75,6 +76,9 @@ public class Customer {
     }
     public StringProperty countryProperty() {
         return country;
+    }
+    public StringProperty stateProperty() {
+        return state;
     }
     
     //setters and getters
@@ -162,8 +166,15 @@ public class Customer {
         return this.country.get();
     }
     
+    /*public void setState(String state){
+        this.state.set(state);
+    }
+    public String getState(){
+        return this.state.get();
+    } */
+    
     public static String isCustValid(String custName, String address, String city,
-                                         String country, String zipCode, String phone) {
+                                         String country, String zipCode, String phone, String state) {
         String errorMessage = "";
         if (custName.length() == 0) {
             errorMessage = errorMessage + "The customer name field is required. \n";
@@ -182,6 +193,10 @@ public class Customer {
         }
         if (phone.length() == 0) {
             errorMessage = errorMessage + "The phone field is required. \n";
+        }
+        if (state.length() == 0) {
+            errorMessage = errorMessage + "The state field is required. \n";
+        } else {
         }
         return errorMessage;
     }

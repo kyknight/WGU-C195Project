@@ -41,9 +41,9 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="250.0" spacing="20.0">
                      <children>
-                        <ChoiceBox fx:id="modAppTypeChoiceBox" prefWidth="250.0" />
+                        <TextField fx:id="modAppTypeTextField" />
                         <TextField fx:id="modAppTitleTextField" prefHeight="30.0" />
-                        <TextArea prefHeight="100.0" prefWidth="200.0" wrapText="true" />
+                        <TextArea fx:id="modAppDescriptionTextField" prefHeight="100.0" prefWidth="200.0" wrapText="true" />
                         <TextField fx:id="modAppLocationTextField" prefHeight="30.0" />
                         <TextField fx:id="modAppContactTextField" prefHeight="30.0" />
                         <TextField fx:id="modAppUrlTextField" prefHeight="30.0" />
@@ -96,7 +96,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="modAppAddTableLabel" text="Appointment List" />
+                  <Label fx:id="modAppAddTableLabel" text="Customers" />
                </children>
             </HBox>
             <TableView fx:id="addModAppAddTableView" prefHeight="150.0" prefWidth="400.0">
@@ -114,7 +114,7 @@
             </Button>
             <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="modAppSelectedTableLabel" text="Selected Appointments" />
+                  <Label fx:id="modAppSelectedTableLabel" text="Selected Customers" />
                </children>
             </HBox>
             <TableView fx:id="addModAppDeleteTableView" prefHeight="150.0" prefWidth="400.0">
@@ -132,15 +132,19 @@
             <Button fx:id="modAppDeleteButton" mnemonicParsing="false" text="Delete" />
             <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="modAppSaveButton" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="modAppSaveButton" mnemonicParsing="false" text="Update" />
                   <Button fx:id="modAppCancelButton" mnemonicParsing="false" text="Cancel" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Label fx:id="modAppCreateDateLabel" layoutX="395.0" layoutY="569.0" text="Created:" />
-      <Label fx:id="modAppCreateByLabel" layoutX="587.0" layoutY="569.0" text="By:" />
-      <Label fx:id="modAppCreateDateGrabLabel" layoutX="454.0" layoutY="569.0" text="yyyy-MM-dd h:mm" />
-      <Label fx:id="modAppCreateByGrabLabel" layoutX="614.0" layoutY="569.0" text="username" />
+      <HBox layoutX="428.0" layoutY="566.0" prefHeight="25.0" prefWidth="307.0">
+         <children>
+            <Label fx:id="modAppCreateDateLabel" prefHeight="20.0" prefWidth="60.0" text="Created:" />
+            <Label fx:id="modAppCreateDateGrabLabel" prefHeight="20.0" prefWidth="125.0" text="yyyy-MM-dd h:mm" />
+            <Label fx:id="modAppCreateByLabel" prefHeight="20.0" prefWidth="25.0" text="By:" />
+            <Label fx:id="modAppCreateByGrabLabel" prefHeight="20.0" prefWidth="65.0" text="username" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

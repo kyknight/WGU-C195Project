@@ -85,14 +85,13 @@ public class AppointmentSummaryController implements Initializable {
      */
     private void AppSumAppDetailButtonPushed(ActionEvent event){
         Appointment app = appSumTableview.getSelectionModel().getSelectedItem();
-        ResourceBundle rb = ResourceBundle.getBundle("AddModifyApp", Locale.getDefault());
         //is an appointment selected?
         //yes
         if (app == null){
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle(rb.getString("error"));
-            alert.setHeaderText(rb.getString("errorAppSumDetails"));
-            alert.setContentText(rb.getString("errorAppSumMessage"));
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please Select an appointment to view appointment details.");
             alert.showAndWait();
         } /* nope */ else {
             appSumDetailTitleLabel.setText(app.getTitle());
@@ -112,11 +111,10 @@ public class AppointmentSummaryController implements Initializable {
         //is an appointment selected?
         //yes
         if (appMod == null){
-            ResourceBundle rb = ResourceBundle.getBundle("AddModifyApp", Locale.getDefault());
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle(rb.getString("error"));
-            alert.setHeaderText(rb.getString("errorModApp"));
-            alert.setContentText(rb.getString("errorModingAppSelect"));
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please Select an appointment to modify an appointment.");
             alert.showAndWait();
         }
         appIndexMod = getAppList().indexOf(appMod);
@@ -143,11 +141,10 @@ public class AppointmentSummaryController implements Initializable {
         //is an appointment selected?
         //yes
         if (appDelete == null){
-            ResourceBundle rb = ResourceBundle.getBundle("AddModApp",Locale.getDefault());
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle(rb.getString("error"));
-            alert.setHeaderText(rb.getString("errorDelApp"));
-            alert.setContentText(rb.getString("errorDelAppMessage"));
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select an appointment to delete an appointment.");
             alert.showAndWait();
         }
         DBManager.deleteApp(appDelete);

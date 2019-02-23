@@ -20,15 +20,16 @@ import javafx.beans.property.StringProperty;
  */
 public class Appointment {
     
-    private IntegerProperty appId, custId;
-    private StringProperty title, desc, location, type, contact, url, dateString, startString, endString, createdBy;
+    private IntegerProperty appId, custId, userId;
+    private StringProperty title, desc, location, type, contact, url, dateString, startString, endString, createdBy, createDateString;
     private Timestamp startTimestamp, endTimestamp;
-    private Date startDate, endDate;
+    private Date startDate, endDate, createDate;
     
     /**
      * This is a constructor
      * @param appId
      * @param custId
+     * @param userId
      * @param title
      * @param desc
      * @param location
@@ -39,11 +40,15 @@ public class Appointment {
      * @param startDate
      * @param endDate
      * @param createdBy 
+     * @param type 
+     * @param createDate 
      */
-    public Appointment(int appId, int custId, String title, String desc, String location, String contact,
-                       String url, Timestamp startTimestamp, Timestamp endTimestamp, Date startDate, Date endDate, String createdBy){
+    public Appointment(int appId, int custId, int userId, String title, String desc, String location, String contact,
+                       String url, Timestamp startTimestamp, Timestamp endTimestamp, Date startDate, Date endDate, 
+                       String createdBy, String type, Date createDate){
         this.appId = new SimpleIntegerProperty(appId);
         this.custId = new SimpleIntegerProperty(custId);
+        this.userId = new SimpleIntegerProperty(userId);
         this.title = new SimpleStringProperty(title);
         this.desc = new SimpleStringProperty(desc);
         this.location = new SimpleStringProperty(location);
@@ -59,6 +64,8 @@ public class Appointment {
         this.startString = new SimpleStringProperty(formatTime.format(startDate));
         this.endString = new SimpleStringProperty(formatTime.format(endDate));
         this.createdBy = new SimpleStringProperty(createdBy);
+        this.type = new SimpleStringProperty(type);
+        this.createDateString = new SimpleStringProperty(format.format(createDate)); 
     }
     
     //Properties
@@ -67,6 +74,9 @@ public class Appointment {
     }
     public IntegerProperty custIdIntegerProperty() {
         return this.custId;
+    }
+    public IntegerProperty userIdIntegerProperty() {
+        return this.userId;
     }
     public StringProperty titleStringProperty() {
         return this.title;
@@ -98,20 +108,28 @@ public class Appointment {
     public StringProperty createdByProperty() {
         return this.createdBy;
     }
+    public StringProperty typeProperty() {
+        return this.type;
+    }
+    public StringProperty createDateProperty(){
+        return this.createDateString;
+    }
     
     //Getters and Setters
-    public void setAppId(int appId){
-        this.appId.set(appId);
-    }
+    
     public int getAppId(){
         return this.appId.get();
     }
     
-    public void setCustId(int custId){
-        this.custId.set(custId);
-    }
     public int getCustId(){
         return this.custId.get();
+    }
+    
+    public void setUserId(int userId){
+        this.userId.set(userId);
+    }
+    public int getUserId(){
+        return this.userId.get();
     }
     
     public void setTitle(String title){
@@ -133,13 +151,6 @@ public class Appointment {
     }
     public String getLocation(){
         return this.location.get();
-    }
-    
-    public void setType(String type){
-        this.type.set(type);
-    }
-    public String getType(){
-        return this.type.get();
     }
     
     public void setContact(String contact){
@@ -197,13 +208,27 @@ public class Appointment {
         return this.createdBy.get();
     }
     
+    public void setType(String type){
+        this.type.set(type);
+    }
+    public String getType(){
+        return this.type.get();
+    }
+    
+    public String getCreateDateString(){
+        return this.createDateString.get();
+    }
+    
     public static String isAppValid(Customer customer, String title, String desc, String location, LocalDate appDate,
-            String startHr, String startMin, String startAmPm, String endHr, String endMin, String endAmPm) throws NumberFormatException{
+            String startHr, String startMin, String startAmPm, String endHr, String endMin, String endAmPm, String type) throws NumberFormatException{
         String errorMessage = "";
         
         try{
             if (customer == null) {
                 errorMessage = errorMessage + "A customer is required to be associated with each appointment. \n";
+            }
+            if (type.length() == 0){
+                errorMessage = errorMessage + "The type field is required. \n";
             }
             if (title.length() == 0) {
                 errorMessage = errorMessage + "The tile field is required. \n";
