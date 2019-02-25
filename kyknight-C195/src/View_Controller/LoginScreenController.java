@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This controller method sets the language for the login page and adds the actions
+ * for the buttons selected based on the username and password entered.
  */
 package View_Controller;
 
@@ -43,6 +42,7 @@ public class LoginScreenController implements Initializable {
     
     /**
      * This method sets the labels and text fields to the local language.
+     * Currently, only for English and Google Translate Spanish.
      */
     private void setLanguage(){
         ResourceBundle rb = ResourceBundle.getBundle("Resources/Login", Locale.getDefault());
@@ -53,7 +53,7 @@ public class LoginScreenController implements Initializable {
     }
     
     /**
-     *  When the login button is selected, this method submits the user-entered credentials then verifies
+     * When the login button is selected, this method submits the user-entered credentials then verifies
      * the credentials. If not verified, error messages display. If verified, the user is redirected to the
      * main screen.
      * @param event 
@@ -90,7 +90,7 @@ public class LoginScreenController implements Initializable {
     }
     
     /**
-     * This method increments the databaseError signal
+     * This method increments the databaseError signal, when called.
      */
     public static void IncrementDatabaseError() {
         databaseError++;

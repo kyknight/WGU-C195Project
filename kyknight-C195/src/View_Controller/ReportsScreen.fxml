@@ -15,7 +15,7 @@
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
                   <Label fx:id="reportApp101Label" text="APP101 - Appointment Type Tally" />
-                  <Label fx:id="report101DescLabel" alignment="CENTER" prefWidth="300.0" text="Running count of appointment types per month">
+                  <Label fx:id="report101DescLabel" alignment="CENTER" prefWidth="300.0" text="Running count of appointment types per month.">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -31,7 +31,7 @@
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
                   <Label fx:id="reportApp102Label" text="APP102 - Consultant Schedule" />
-                  <Label fx:id="report102DescLabel" alignment="CENTER" prefWidth="300.0" text="Scheduled appointments for each consultant" wrapText="true">
+                  <Label fx:id="report102DescLabel" alignment="CENTER" prefWidth="300.0" text="Scheduled appointments for each consultant." wrapText="true">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

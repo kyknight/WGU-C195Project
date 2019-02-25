@@ -1,7 +1,18 @@
-Upcoming Meetings for Each Customer: \n \nJane Doe: 
+Upcoming Meetings for Each Customer: 
+ 
+John Doe: 
+02-25-2019: helping
+ from 09:00AM
+ to 09:30AM CST. 
+
+ 
+Jane Doe: 
 03-07-2019: not needed
  from 07:30AM
  to 07:45AM CST. 
+02-28-2019: help
+ from 09:00AM
+ to 09:30AM CST. 
 
  
 Sally Test: 
@@ -14,6 +25,21 @@ Sally Test:
 03-22-2019: not needed
  from 11:00AM
  to 12:00PM CDT. 
+03-22-2019: not needed
+ from 1:30PM
+ to 2:00PM CDT. 
+02-27-2019: stuff
+ from 04:00AM
+ to 04:30AM CST. 
+02-28-2019: things
+ from 05:00AM
+ to 05:30AM CST. 
+
+ 
+Cust12: 
+02-27-2019: test2
+ from 09:30AM
+ to 10:00AM CST. 
 
  
 

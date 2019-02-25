@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The purpose of this class file is to communicate with the database of changes 
+ * to the appointment and customer tables, to validate user logins, and to generate
+ * reports number of appointment types by month(101), each consultant's schedule(102), 
+ * each customer's upcoming meetings(103), and a user login text file.
  */
 package Model;
 
@@ -46,7 +47,7 @@ public class DBManager {
     private static Boolean check;
 
     /**
-     * This method checks if the user's credentials are valid.
+     * This method, when called, checks if the user's credentials are valid in the database.
      *
      * @param userName
      * @param password
@@ -72,7 +73,7 @@ public class DBManager {
     }
 
     /**
-     * This method grabs the userId from the userName. If there is no match
+     * This method grabs the userId from the userName in the database. If there is no match
      * found for userName, returns -1 and displays error message.
      *
      * @param userName
@@ -85,8 +86,6 @@ public class DBManager {
             e.printStackTrace();
         }
         int userId = -1;
-
-        //
         try {
             Connection conn = DriverManager.getConnection(dbUrl, user, pass);
             Statement stmt = conn.createStatement();
@@ -105,7 +104,8 @@ public class DBManager {
     }
 
     /**
-     * This method checks the password and userId entered to see if they match
+     * This method, when called, checks the password and userId entered to see if they match
+     * the database record.
      *
      * @param userId
      * @param password
@@ -141,7 +141,7 @@ public class DBManager {
     }
 
     /**
-     * This method allows public access for the currUser String
+     * This method, when called, allows public access for the currUser String.
      *
      * @param userName
      */
@@ -150,9 +150,9 @@ public class DBManager {
     }
 
     /**
-     * This method check on whether or not an appointment that the user created
+     * This method, when called, check on whether or not an appointment that the user created
      * is scheduled within the next 15 minutes. If there is, a notification of
-     * the scheduled appointment is created
+     * the scheduled appointment is created.
      */
     public static void loginAppNotify() {
         if (openCount == 0) {
@@ -187,7 +187,7 @@ public class DBManager {
     }
 
     /**
-     * This method updates the custList after the db has been changed
+     * This method, when called, updates the custList after the database has been changed.
      */
     public static void updateCustList() {
         try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
@@ -252,7 +252,7 @@ public class DBManager {
     }
 
     /**
-     * This method checks whether or not a customer already exists in the db and
+     * This method, when called, checks whether or not a customer already exists in the database and
      * whether it is active or inactive. If customer exists in db, displays an
      * alert that the customer already exists.
      *
@@ -310,7 +310,7 @@ public class DBManager {
     }
 
     /**
-     * This method checks whether an entered countryId exits. If so, returns
+     * This method, when called, checks whether an entered countryId exits in the database. If so, returns
      * countryId. If not, creates new countryId entry and returns the new
      * countryId.
      *
@@ -350,7 +350,7 @@ public class DBManager {
     }
 
     /**
-     * This method checks whether an entered cityId exits. If so, returns
+     * This method, when called, checks whether an entered cityId exits in the database. If so, returns
      * cityId. If not, creates new cityId entry and returns the new cityId.
      *
      * @param city
@@ -390,8 +390,8 @@ public class DBManager {
     }
 
     /**
-     * This method checks whether an entered addressId exits. If so, returns
-     * cityId. If not, creates new addressId entry and returns the new
+     * This method, when called, checks whether an entered addressId exits in the database. 
+     * If so, returns cityId. If not, creates new addressId entry and returns the new
      * addressId.
      *
      * @param address
@@ -435,7 +435,7 @@ public class DBManager {
     }
 
     /**
-     * This method checks whether the customer already exists. If so, returns
+     * This method, when called, checks whether the customer already exists in the database. If so, returns
      * true. If not, returns false.
      *
      * @param custName
@@ -460,8 +460,8 @@ public class DBManager {
     }
 
     /**
-     * This method changes the customer from "inactive" to "active", if "OK" is
-     * selected.
+     * This method, when called, changes the customer from "inactive" to "active" 
+     * in the database, after the alert to the user is made and if "OK" is selected.
      *
      * @param custName
      * @param addressId
@@ -488,7 +488,7 @@ public class DBManager {
     }
 
     /**
-     * This method creates a new customer, if it doesnt already exist.
+     * This method, when called, creates a new customer in the database, if it doesnt already exist.
      *
      * @param custName
      * @param addressId
@@ -509,14 +509,14 @@ public class DBManager {
             }
             //creates new custId entry
             stmt.executeUpdate("INSERT INTO customer VALUES ('" + custId + "', '" + custName + "', '" + addressId + "', 1, CURRENT_DATE, '" 
-                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')"); // Problems
+                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * This method modifies existing customer entry and checks if the customer
+     * This method, when called, modifies existing customer entry in the database and checks if the customer
      * already exists.
      *
      * @param custId
@@ -559,7 +559,8 @@ public class DBManager {
     }
 
     /**
-     * This method grabs the custId from the custName and addressId
+     * This method, when called, grabs the custId using the custName and addressId as
+     * identifiers.
      *
      * @param custName
      * @param addressId
@@ -577,7 +578,7 @@ public class DBManager {
     }
 
     /**
-     * This method grabs the active status of a customer entry.
+     * This method, when called, grabs the active status of a customer entry.
      *
      * @param custId
      * @return
@@ -594,7 +595,7 @@ public class DBManager {
     }
 
     /**
-     * This method updates customer entry if unique.
+     * This method, when called, updates customer entry in the database, if unique.
      *
      * @param custId
      * @param custName
@@ -612,8 +613,8 @@ public class DBManager {
     }
 
     /**
-     * This method sets the selected customer to 'inactive' hiding the customer
-     * in the customer list
+     * This method, when called, sets the selected customer to 'inactive' hiding the customer
+     * in the customer list.
      *
      * @param custToRemove
      */
@@ -642,7 +643,7 @@ public class DBManager {
     }
 
     /**
-     * This method updates the appList with current appointments to occur.
+     * This method, when called, updates the appList with current appointments.
      */
     public static void updateAppList() {
         try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass); Statement stmt = conn.createStatement()) {
@@ -691,7 +692,7 @@ public class DBManager {
     }
 
     /**
-     * This method verifies that the appointment created does not overlap
+     * This method, when called, verifies that the appointment created does not overlap
      * another appointment. If not, creates the appointment. If so, alerts the
      * user that there is an overlapping of appointments.
      *
@@ -708,7 +709,7 @@ public class DBManager {
      * @return
      */
     public static boolean addNewApp(Customer customer, String title, String desc, String location, String contact,
-            String url, ZonedDateTime startUTC, ZonedDateTime endUTC, String type, int userId) {
+            String url, ZonedDateTime startUTC, ZonedDateTime endUTC, String type) {
         //ZonedDateTimes to Timestamp
         String startUTCString = startUTC.toString();
         startUTCString = startUTCString.substring(0, 10) + " " + startUTCString.substring(11, 16) + ":00";
@@ -728,15 +729,15 @@ public class DBManager {
         } /* no overlap = new appoiment created */ else {
             int custId = customer.getCustId();
             //int userId = userId.getUserId();
-            addApp(custId, title, desc, location, contact, url, startTimestamp, endTimestamp, type, userId);
+            addApp(custId, title, desc, location, contact, url, startTimestamp, endTimestamp, type);
             check = true;
             return check;
         }
     }
 
     /**
-     * This method checks whether a new appointment overlaps an existing
-     * appointment. Returns true if overlapping and false if not.
+     * This method, when called, checks whether a new appointment overlaps an existing
+     * appointments. Returns true if overlapping and false if not.
      *
      * @param startTimestamp
      * @param endTimestamp
@@ -773,7 +774,8 @@ public class DBManager {
     }
 
     /**
-     * This method creates a new appointment with new appId.
+     * This method, when called, creates a new appointment in the database with 
+     * new appId.
      *
      * @param custId
      * @param title
@@ -785,11 +787,12 @@ public class DBManager {
      * @param endTimestamp
      */
     private static void addApp(int custId, String title, String desc, String location, String contact, String url,
-            Timestamp startTimestamp, Timestamp endTimestamp, String type, int userId) {
+            Timestamp startTimestamp, Timestamp endTimestamp, String type) {
         try (Connection conn = (Connection) DriverManager.getConnection(DBManager.dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet allAppId = stmt.executeQuery("SELECT appointmentId FROM appointment Order BY appointmentId");
             int appId;
+            int userId = getUserId(currUser);
             //grabs the last appId value and adds one to the new appointment for the new appId
             if (allAppId.last()) {
                 appId = allAppId.getInt(1) + 1;
@@ -801,7 +804,7 @@ public class DBManager {
             //creates a new entry with the new appId
             stmt.executeUpdate("INSERT INTO appointment VALUES ('" + appId + "', '" + custId + "', '" + title + "', '"
                     + desc + "', '" + location + "', '" + contact + "', '" + url + "', '" + startTimestamp + "', '" + endTimestamp + "', CURRENT_DATE, '" 
-                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "', '" + type + "', '" + userId + "')"); //need to add userId
+                    + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "', '" + type + "', '" + userId + "')"); 
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -813,8 +816,8 @@ public class DBManager {
     }
 
     /**
-     * This method modifies an existing appointment; checking that it does not
-     * overlap another appointment.
+     * This method, when called, modifies an existing appointment in the database
+     * while checking that it does not overlap another appointment.
      *
      * @param appId
      * @param customer
@@ -863,7 +866,7 @@ public class DBManager {
     }
 
     /**
-     * This method updates appointment entry when the times entered are valid.
+     * This method, when called, updates appointment entry in the database.
      *
      * @param appId
      * @param custId
@@ -889,7 +892,7 @@ public class DBManager {
     }
 
     /**
-     * This method verifies that a new appointment does not overlap another
+     * This method, when called, verifies that a new appointment does not overlap another
      * existing appointment. If true, alerts user of overlap. If false, returns
      * false.
      *
@@ -929,8 +932,8 @@ public class DBManager {
     }
 
     /**
-     * This method deletes appointment from database by the appId.
-     *
+     * This method, when called, deletes appointment from database by the appId after
+     * alerting the user to confirm the deletion of the appointment.
      * @param appDelete
      */
     public static void deleteApp(Appointment appDelete) {
@@ -959,13 +962,13 @@ public class DBManager {
     }
 
     /**
-     * This method generates a report for the number of appointment types by
-     * month in TXT format.
+     * This method, when called, generates a report for the number of appointment types by
+     * month with times then places the Text file in the root folder.
      */
     public static void run101() {
         updateAppList();
         //initializes the report string
-        String report = "Number of Appointment Types By Month: \\n \\n";
+        String report = "Number of Appointment Types By Month: \n \n";
         ArrayList<String> monthsWithApp = new ArrayList<>();
         //checks the month and year for each appointment and adds year-month to the ArrayList
         AppointmentList.getAppList().stream().map((app) -> app.getStartDate()).map((startDate) -> {
@@ -1004,7 +1007,7 @@ public class DBManager {
                         typeCount++;
                     }
                 }
-            }
+                }
             //adds year-month to report
             report = report + yearMonth + ": " + typeCount + "\n";
             report = report + "Types: ";
@@ -1025,11 +1028,12 @@ public class DBManager {
     }
 
     /**
-     * This method generates a report for each consultant's schedule.
+     * This method, when called, generates a report for each consultant's schedule
+     * with times then places the Text file in the root folder.
      */
     public static void run102() {
         updateAppList();
-        String report = "Upcoming Schedule for Each Consultant: \\n \\n";
+        String report = "Upcoming Schedule for Each Consultant: \n \n";
         ArrayList<String> consultantWithApps = new ArrayList<>();
         //checks the createdBy field of each appointment and adds new createdBy's to ArrayList
         AppointmentList.getAppList().stream().map((app) -> app.getCreatedBy()).filter((consultant) -> (!consultantWithApps.contains(consultant))).forEachOrdered((consultant) -> {
@@ -1081,12 +1085,13 @@ public class DBManager {
     }
 
     /**
-     * This method generates a report for each customer's upcoming meetings.
+     * This method, when called, generates a report for each customer's upcoming meetings
+     * with times then places the Text file in the root folder.
      */
     public static void run103() {
         updateAppList();
         //initializes the report string
-        String report = "Upcoming Meetings for Each Customer: \\n \\n";
+        String report = "Upcoming Meetings for Each Customer: \n \n";
         ArrayList<Integer> custIdsWithApps = new ArrayList<>();
         //check custId of each appointment then adds new custId's to ArrayList
         AppointmentList.getAppList().stream().map((app) -> app.getCustId()).filter((custId) -> (!custIdsWithApps.contains(custId))).forEachOrdered((custId) -> {
@@ -1142,7 +1147,7 @@ public class DBManager {
     }
 
     /**
-     * This method cleans up the database entries which are no longer associated
+     * This method, when called, cleans up the database entries which are no longer associated
      * with a customer. Garbage Collector method.
      */
     private static void cleanDatabase() {

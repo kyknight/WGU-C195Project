@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This controller file is to set the actions to the buttons to modify/updates the customer 
+ * information and to navigate to the Main Screen (MainSreen.fxml) when selecting the cancel button.
  */
 package View_Controller;
 

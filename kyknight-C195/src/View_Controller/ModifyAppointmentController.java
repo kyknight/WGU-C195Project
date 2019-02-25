@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The purpose of this controller file is to set the actions/event handlers of updating
+ * an appointment to the database using the GUI textfields, choice boxes, datepicker, 
+ * textarea, tableviews, and buttons. 
  */
 package View_Controller;
 
 import Model.Appointment;
 import static Model.AppointmentList.getAppList;
-//import void Model.Appointment.getType;
 import Model.Customer;
 import Model.CustomerList;
 import static Model.CustomerList.getCustList;
@@ -18,8 +17,10 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -81,27 +82,35 @@ public class ModifyAppointmentController{
     private ObservableList<Customer> currCust = FXCollections.observableArrayList();
     
     /**
-     * This method adds the selected customer to the delete table / lower table - currCust
+     * This method, when called, adds the selected customer to the delete table/lower table
+     * (selected customer table to unselected customer table), in the event
+     * that the method is called by selecting the Add button, checking that 
+     * a customer is selected. Called the method from AddAppointmetnController.java
      * @param event 
      */
     private void ModAppAddButtonPushed(ActionEvent event){
-        //called the method from AddAppointmetnController.java
         AddAppointmentController addPushed = new AddAppointmentController();
         addPushed.AddModAppAddButtonPushed(event);
     }
     
     /**
-     * This method deletes the selected customer from the delete table / lower table - currCust
+     * This method, when called, deletes the selected customer from the delete table/lower
+     * table (selected customer table to unselected customer table), in the event
+     * that the method is called by selecting the Delete button, checking that 
+     * a customer is selected. Called the method from AddAppointmetnController.java
+     * 
      * @param event 
      */
     private void ModAppDeleteButtonPushed(ActionEvent event){
-        //called the method from AddAppointmetnController.java 
         AddAppointmentController deletePushed = new AddAppointmentController();
         deletePushed.AddModAppDeleteButtonPushed(event);
     }
     
     /**
-     * This method, on the save button being selected, the app info is submitted to be updated to the DB
+     * This method, when called, gets the appointment information then updates the information
+     * to the database checking that the appointment required information is 
+     * entered. Once the appointment information is updated to the DB, the user is
+     * redirected to the Main Screen (MainScreen.fxml).
      * @param event 
      */
     private void ModAppSaveButtonPushed(ActionEvent event){
@@ -145,20 +154,23 @@ public class ModifyAppointmentController{
             return;
         }
         
-        SimpleDateFormat localDateFormat = new SimpleDateFormat("yyy-MM-dd h:mm a");
-        localDateFormat.setTimeZone(TimeZone.getDefault());
-        Date startLocal = null;
-        Date endLocal = null;
-        try {
-            startLocal = localDateFormat.parse(appDate.toString() + " " + startHr + ":" + startMin + " " + startAmPm);
-            endLocal = localDateFormat.parse(appDate.toString() + " " + endHr + ":" + endMin + " " + endAmPm);
-        }
-        catch (ParseException e) {
-            e.printStackTrace();
+        DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mm a");
+        LocalDateTime startLocal = null;
+        LocalDateTime endLocal = null;
+        if (startAmPm == null || endAmPm == null) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("AM or PM selection.");
+            alert.setContentText("Please select AM or PM for appointment time.");
+            alert.showAndWait();
+            return;
+        } else {
+            startLocal = LocalDateTime.parse(appDate.toString() + " " + startHr + ":" + startMin + " " + startAmPm, localDateFormat);
+            endLocal = LocalDateTime.parse(appDate.toString() + " " + endHr + ":" + endMin + " " + endAmPm, localDateFormat);
         }
         //create ZonedDateTime with Date objects
-        ZonedDateTime startUTC = ZonedDateTime.ofInstant(startLocal.toInstant(), ZoneId.of("UTC"));
-        ZonedDateTime endUTC = ZonedDateTime.ofInstant(endLocal.toInstant(), ZoneId.of("UTC"));
+        ZonedDateTime startUTC = startLocal.atZone(ZoneId.of("UTC"));
+        ZonedDateTime endUTC = endLocal.atZone(ZoneId.of("UTC"));
         //submits info to be added to DB and checks if 'true' is returned
         if (modApp(appId,customer,title,desc,location,contact,url,startUTC,endUTC,type,userId,custId)) {
             try {
@@ -175,7 +187,10 @@ public class ModifyAppointmentController{
     }
     
     /**
-     * This method, when cancel button is selected and 'OK' is selected, will redirect the user to the Main screen.
+     * This method, when called, alerts the user informing that they are leaving
+     * the page without saving information, then redirects the user to the Main 
+     * Screen (MainScreen.fxml), if user selects 'OK'.
+     * 
      * @param event 
      */
     private void ModAppCancelButtonPushed(ActionEvent event){
@@ -185,14 +200,14 @@ public class ModifyAppointmentController{
     }
     
     /**
-     * This method updates the add table / top table
+     * This method, when called, updates the add table/top table (selected customer table)
      */
     public void AddModAppAddTableViewUpdate() {
         addModAppAddTableView.setItems(CustomerList.getCustList());
     } //take off already selected customer
 
     /**
-     * This method update the delete table / lower table
+     * This method, when called, updates the delete table/lower table (selected customer table)
      */
     public void AddModAppDeleteTableViewUpdate() {
         addModAppDeleteTableView.setItems(currCust);

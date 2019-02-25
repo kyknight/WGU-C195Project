@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This java class is used in aide to get the listed fields and set the desired fields to be called
+ * by other methods for customer information.
  */
 package Model;
 
@@ -22,7 +21,9 @@ public class Customer {
     private StringProperty custName, address1, address2, zipCode, phone, city, state, country;
     
     /**
-     * This is a constructor
+     * *****************
+     * Constructor
+     * *****************
      */
     public Customer() {
         custId = new SimpleIntegerProperty();
@@ -40,7 +41,13 @@ public class Customer {
         state = new SimpleStringProperty();
     }
     
-    //properties
+    /**
+     * ******************
+     * Properties
+     * ******************
+     * 
+     * @return 
+     */
     public IntegerProperty custIdProperty() {
         return custId;
     }
@@ -81,98 +88,104 @@ public class Customer {
         return state;
     }
     
-    //setters and getters
-    public void setCustId(int custId){
-        this.custId.set(custId);
-    }
+    /**
+     * ********************
+     * Getters
+     * ********************
+     * 
+     * @return 
+     */
     public int getCustId(){
         return this.custId.get();
-    }
-    
-    public void setCustName(String custName){
-        this.custName.set(custName);
     }
     public String getCustName(){
         return this.custName.get();
     }
-    
-    public void setActive(int active){
-        this.active.set(active);
-    }
     public int getActive(){
         return this.active.get();
-    }
-    
-    public void setAddressId(int addressId){
-        this.addressId.set(addressId);
     }
     public int getAddressId(){
         return this.addressId.get();
     }
-    
-    public void setAddress1(String address1){
-        this.address1.set(address1);
-    }
     public String getAddress1(){
         return this.address1.get();
-    }
-    
-    public void setAddress2(String address2){
-        this.address2.set(address2);
     }
     public String getAddress2(){
         return this.address2.get();
     }
-    
-    public void setZipCode(String zipCode){
-        this.zipCode.set(zipCode);
-    }
     public String getZipcode(){
         return this.zipCode.get();
-    }
-    
-    public void setPhone(String phone){
-        this.phone.set(phone);
     }
     public String getPhone(){
         return this.phone.get();
     }
-    
-    public void setCityId(int cityId){
-        this.cityId.set(cityId);
-    }
     public int getCityId(){
         return this.cityId.get();
-    }
-    
-    public void setCity(String city){
-        this.city.set(city);
     }
     public String getCity(){
         return this.city.get();
     }
-    
-    public void setCountryId(int countryId){
-        this.countryId.set(countryId);
-    }
     public int getCountryId(){
         return this.countryId.get();
-    }
-    
-    public void setCountry(String country){
-        this.country.set(country);
     }
     public String getCountry(){
         return this.country.get();
     }
     
-    /*public void setState(String state){
-        this.state.set(state);
+    /**
+     * *****************
+     * Setters
+     * *****************
+     * 
+     */
+    public void setCustId(int custId){
+        this.custId.set(custId);
     }
-    public String getState(){
-        return this.state.get();
-    } */
+    public void setCustName(String custName){
+        this.custName.set(custName);
+    }
+    public void setActive(int active){
+        this.active.set(active);
+    }
+    public void setAddressId(int addressId){
+        this.addressId.set(addressId);
+    }
+    public void setAddress1(String address1){
+        this.address1.set(address1);
+    }
+    public void setAddress2(String address2){
+        this.address2.set(address2);
+    }
+    public void setZipCode(String zipCode){
+        this.zipCode.set(zipCode);
+    }
+    public void setPhone(String phone){
+        this.phone.set(phone);
+    }
+    public void setCityId(int cityId){
+        this.cityId.set(cityId);
+    }
+    public void setCity(String city){
+        this.city.set(city);
+    }
+    public void setCountryId(int countryId){
+        this.countryId.set(countryId);
+    }
+    public void setCountry(String country){
+        this.country.set(country);
+    }
     
+    /**
+     * 
+     * @param custName
+     * @param address
+     * @param city
+     * @param country
+     * @param zipCode
+     * @param phone
+     * @param state
+     * @return 
+     */
     public static String isCustValid(String custName, String address, String city,
                                          String country, String zipCode, String phone, String state) {
         String errorMessage = "";

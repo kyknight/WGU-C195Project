@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This java class is used in aide to get the listed fields and set the desired fields to be called
+ * by other methods for appointment information.
  */
 package Model;
 
@@ -68,7 +67,12 @@ public class Appointment {
         this.createDateString = new SimpleStringProperty(format.format(createDate)); 
     }
     
-    //Properties
+    /**
+     * *************************
+     * Properties
+     * *************************
+     * @return 
+     */
     public IntegerProperty appoIdIntegerProperty() {
         return this.appId;
     }
@@ -115,152 +119,169 @@ public class Appointment {
         return this.createDateString;
     }
     
-    //Getters and Setters
-    
+    /**
+     * *********************
+     * Getter methods
+     * *********************
+     * @return 
+     */
     public int getAppId(){
         return this.appId.get();
     }
-    
     public int getCustId(){
         return this.custId.get();
-    }
-    
-    public void setUserId(int userId){
-        this.userId.set(userId);
     }
     public int getUserId(){
         return this.userId.get();
     }
-    
-    public void setTitle(String title){
-        this.title.set(title);
-    }
     public String getTitle(){
         return this.title.get();
-    }
-    
-    public void setDesc(String desc){
-        this.desc.set(desc);
     }
     public String getDesc(){
         return this.desc.get();
     }
-    
-    public void setLocation(String location){
-        this.location.set(location);
-    }
     public String getLocation(){
         return this.location.get();
-    }
-    
-    public void setContact(String contact){
-        this.contact.set(contact);
     }
     public String getContact(){
         return this.contact.get();
     }
-    
-    public void setUrl(String url){
-        this.url.set(url);
-    }
     public String getUrl(){
         return this.url.get();
     }
-    
     public Date getStartDate(){
         return this.startDate;
     }
-    
     public Date getEndDate(){
         return this.endDate;
     }
-    
     public String getDateString(){
         return this.dateString.get();
     }
-    
     public String getStartString(){
         return this.startString.get();
     }
-    
     public String getEndString(){
         return this.endString.get();
-    }
-    
-    public void setStartTimestamp(Timestamp startTimestamp){
-        this.startTimestamp = startTimestamp;
     }
     public Timestamp getStartTimestamp(){
         return this.startTimestamp;
     }
-    
-    public void setEndTimestamp(Timestamp endTimestamp){
-        this.endTimestamp = endTimestamp;
-    }
     public Timestamp getEndTimestamp(){
         return this.endTimestamp;
-    }
-    
-    public void setCreatedBy(String createdBy){
-        this.createdBy.set(createdBy);
     }
     public String getCreatedBy(){
         return this.createdBy.get();
     }
-    
-    public void setType(String type){
-        this.type.set(type);
-    }
     public String getType(){
         return this.type.get();
     }
-    
     public String getCreateDateString(){
         return this.createDateString.get();
     }
     
+    
+    /**
+     * ***********************
+     * Setter methods
+     * ***********************
+     *  
+     */
+    public void setTitle(String title){
+        this.title.set(title);
+    }
+    public void setDesc(String desc){
+        this.desc.set(desc);
+    }
+    public void setLocation(String location){
+        this.location.set(location);
+    }
+    public void setContact(String contact){
+        this.contact.set(contact);
+    }
+    public void setUrl(String url){
+        this.url.set(url);
+    }
+    public void setStartTimestamp(Timestamp startTimestamp){
+        this.startTimestamp = startTimestamp;
+    }
+    public void setEndTimestamp(Timestamp endTimestamp){
+        this.endTimestamp = endTimestamp;
+    }
+    public void setCreatedBy(String createdBy){
+        this.createdBy.set(createdBy);
+    }
+    public void setType(String type){
+        this.type.set(type);
+    }
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+    
+    /**
+     * This method checks that appointment fields are entered then alerts the user
+     * to which field needs to be entered before the appointment can be added.
+     * 
+     * @param customer
+     * @param title
+     * @param desc
+     * @param location
+     * @param appDate
+     * @param startHr
+     * @param startMin
+     * @param startAmPm
+     * @param endHr
+     * @param endMin
+     * @param endAmPm
+     * @param type
+     * @return
+     * @throws NumberFormatException 
+     */
     public static String isAppValid(Customer customer, String title, String desc, String location, LocalDate appDate,
             String startHr, String startMin, String startAmPm, String endHr, String endMin, String endAmPm, String type) throws NumberFormatException{
         String errorMessage = "";
         
         try{
             if (customer == null) {
-                errorMessage = errorMessage + "A customer is required to be associated with each appointment. \n";
+                errorMessage = errorMessage + "A customer is required to be associated with each appointment.";
             }
             if (type.length() == 0){
-                errorMessage = errorMessage + "The type field is required. \n";
+                errorMessage = errorMessage + "The type field is required.";
             }
             if (title.length() == 0) {
-                errorMessage = errorMessage + "The tile field is required. \n";
+                errorMessage = errorMessage + "The tile field is required.";
             }
             if (desc.length() == 0) {
-                errorMessage = errorMessage + "A description of the appointment is required. \n";
+                errorMessage = errorMessage + "A description of the appointment is required.";
             }
             if (location.length() == 0) {
-                errorMessage = errorMessage + "A location for the appointment is required. \n";
+                errorMessage = errorMessage + "A location for the appointment is required.";
             }
             if (appDate == null || startHr.equals("") || startMin.equals("") || startAmPm.equals("") ||
                     endHr.equals("") || endMin.equals("") || endAmPm.equals("")) {
-                errorMessage = errorMessage + "A complete start and end time are required. \n";
+                errorMessage = errorMessage + "A complete start and end time are required.";
             }
             if (Integer.parseInt(startHr) < 1 || Integer.parseInt(startHr) > 12 || Integer.parseInt(endHr) < 1 || Integer.parseInt(endHr) > 12 ||
                     Integer.parseInt(startMin) < 0 || Integer.parseInt(startMin) > 59 || Integer.parseInt(endMin) < 0 || Integer.parseInt(endMin) > 59) {
-                errorMessage = errorMessage + "The start and end times must be valid times. \n";
+                errorMessage = errorMessage + "The start and end times must be valid times.";
             }
             if ((startAmPm.equals("PM") && endAmPm.equals("AM")) || (startAmPm.equals(endAmPm) && Integer.parseInt(startHr) != 12 && Integer.parseInt(startHr) > Integer.parseInt(endHr)) ||
                     (startAmPm.equals(endAmPm) && startHr.equals(endHr) && Integer.parseInt(startMin) > Integer.parseInt(endMin))) {
-                errorMessage = errorMessage + "Start time cannot be after end time. \n";
+                errorMessage = errorMessage + "Start time cannot be after end time.";
             }
             if ((Integer.parseInt(startHr) < 9 && startAmPm.equals("AM")) || (Integer.parseInt(endHr) < 9 && endAmPm.equals("AM")) ||
                     (Integer.parseInt(startHr) >= 5 && Integer.parseInt(startHr) < 12 && startAmPm.equals("PM")) || (Integer.parseInt(endHr) >= 5 && Integer.parseInt(endHr) < 12 && endAmPm.equals("PM")) ||
                     (Integer.parseInt(startHr) == 12 && startAmPm.equals("AM")) || (Integer.parseInt(endHr)) == 12 && endAmPm.equals("AM")) {
-                errorMessage = errorMessage + "errorStartEndOutsideHours";
+                errorMessage = errorMessage + "The start and end times cannot be outside of business hours (9 AM - 5 PM) Monday - Friday.";
             }
             if (appDate.getDayOfWeek().toString().toUpperCase().equals("SATURDAY") || appDate.getDayOfWeek().toString().toUpperCase().equals("SUNDAY")) {
-                errorMessage = errorMessage + "The start and end times cannot be outside of business hours (9 AM - 5 PM). \n";
+                errorMessage = errorMessage + "The start and end times cannot be outside of business hours (9 AM - 5 PM) Monday - Friday.";
             }
         } catch(NumberFormatException e){
-            errorMessage = errorMessage + "Start and end time values must be integers. \n";
+            errorMessage = errorMessage + "Start and end time values must be integers.";
         } finally {
             return errorMessage;
         }

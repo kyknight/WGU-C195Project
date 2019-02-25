@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The purpose of this controller file is to set the actions/event handlers of adding
+ * a customer to the database using the GUI textfields, choice boxes, datepicker, 
+ * textarea, tableviews, and buttons. 
  */
 package View_Controller;
 
@@ -100,7 +100,6 @@ public class AddCustomerController implements Initializable {
         alert.setHeaderText("Confirm Cancel");
         alert.setContentText("Are you sure you want to cancel adding a new customer?");
         Optional<ButtonType> result = alert.showAndWait();
-        
         // if OK button selection = true, returns to main screen
         if (result.get() == ButtonType.OK){
             try {
@@ -116,7 +115,10 @@ public class AddCustomerController implements Initializable {
     }
     
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and sets the buttons to action methods to be preformed
+     * when buttons are selected. 
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

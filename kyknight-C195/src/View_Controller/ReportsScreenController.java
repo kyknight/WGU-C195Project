@@ -1,3 +1,8 @@
+/**
+ * This controller file sets actions to the buttons on the fxml (GUI) file and to 
+ * redirect to the user to the Main Screen (MainScreen.fxml), when selecting to exit 
+ * the Report screen (ReportsScreen.fxml).
+ */
 package View_Controller;
 
 import Model.DBManager;
@@ -25,7 +30,8 @@ public class ReportsScreenController implements Initializable {
     @FXML private Button reportRun101Button, reportRun102Button, reportRun103Button, reportExitButton;
     
     /**
-     * This method, when cancel button is selected and 'OK' is selected, will redirect the user to the Main screen.
+     * This method, when cancel button is selected and 'OK' is selected, will redirect 
+     * the user to the Main Screen (MainScreen.fxml).
      * @param event 
      */
     private void ReportsExitButtonPushed (ActionEvent event){

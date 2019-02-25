@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The purpose of this controller file is to set the actions/event handlers of adding
+ * an appointment to the database using the GUI textfields, choice boxes, datepicker, 
+ * textarea, tableviews, and buttons. 
  */
 package View_Controller;
 
@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
+ * 
  * @author kyleighknight
  */
 public class AddAppointmentController implements Initializable {
@@ -89,11 +90,12 @@ public class AddAppointmentController implements Initializable {
 
     // holds the current customers assigned to the appointment
     private ObservableList<Customer> currCust = FXCollections.observableArrayList();
-    
-    private Appointment appointment;
 
     /**
-     * This method adds the selected customer to the delete table / lower table
+     * This method, when called, adds the selected customer to the delete table/lower table
+     * (selected customer table to unselected customer table), in the event
+     * that the method is called by selecting the Add button, checking that 
+     * a customer is selected.
      * - currCust
      *
      * @param event
@@ -126,8 +128,11 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     * This method deletes the selected customer from the delete table / lower
-     * table - currCust
+     * This method, when called, deletes the selected customer from the delete table/lower
+     * table (selected customer table to unselected customer table), in the event
+     * that the method is called by selecting the Delete button, checking that 
+     * a customer is selected.
+     * - currCust
      *
      * @param event
      */
@@ -159,8 +164,10 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     * This method, on the save button being selected, the app info is submitted
-     * to be added to the DB
+     * This method, when called, gets the appointment information then adds the information
+     * to the database checking that the appointment required information is 
+     * entered. Once the appointment information is added to the DB, the user is
+     * redirected to the Main Screen (MainScreen.fxml).
      *
      * @param event
      */
@@ -169,6 +176,12 @@ public class AddAppointmentController implements Initializable {
         //checks id  currCust has a customer. If so, gets customer.
         if (currCust.size() == 1) {
             customer = currCust.get(0);
+        } /* this else should not be called ever */else { 
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Customer ID Error");
+            alert.setContentText("Selected customer does not have a customer ID.");
+            alert.showAndWait();
         }
         //grabs the app information
         String title = addAppTitleTextField.getText();
@@ -179,7 +192,6 @@ public class AddAppointmentController implements Initializable {
         if (contact.length() == 0 && customer != null) {
             contact = customer.getCustName() + ": " + customer.getPhone();
         }
-        
         String url = addAppUrlTextField.getText();
         LocalDate appDate = addAppDatePicker.getValue();
         String startHr = addAppStartHourTextField.getText();
@@ -201,7 +213,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
         }
 
-        DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a");
+        DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mm a");
         LocalDateTime startLocal = null;
         LocalDateTime endLocal = null;
         if (startAmPm == null || endAmPm == null) {
@@ -218,9 +230,8 @@ public class AddAppointmentController implements Initializable {
         //create ZonedDateTime with Date objects
         ZonedDateTime startUTC = startLocal.atZone(ZoneId.of("UTC"));
         ZonedDateTime endUTC = endLocal.atZone(ZoneId.of("UTC"));
-        int userId = appointment.getUserId(); //null pointer problems?
         //submits info to be added to DB and checks if 'true' is returned
-        if (addNewApp(customer, title, desc, location, contact, url, startUTC, endUTC, type, userId)) {
+        if (addNewApp(customer, title, desc, location, contact, url, startUTC, endUTC, type)) {
             try {
                 Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
                 Scene mainScreenScene = new Scene(mainScreenParent);
@@ -234,8 +245,9 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     * This method, when cancel button is selected and 'OK' is selected, will
-     * redirect the user to the main screen.
+     * This method, when called, alerts the user informing that they are leaving
+     * the page without saving information, then redirects the user to the Main 
+     * Screen (MainScreen.fxml), if user selects 'OK'.
      *
      * @param event
      */
@@ -262,14 +274,14 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     * This method updates the add table / top table
+     * This method, when called, updates the add table/top table (selected customer table)
      */
     public void AddModAppAddTableViewUpdate() {
         addModAppAddTableView.setItems(CustomerList.getCustList());
     }
 
     /**
-     * This method update the delete table / lower table
+     * This method, when called, updates the delete table/lower table (selected customer table)
      */
     public void AddModAppDeleteTableViewUpdate() {
         addModAppDeleteTableView.setItems(currCust);
@@ -277,6 +289,9 @@ public class AddAppointmentController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * This method initializes the controller class and assigns the buttons to the 
+     * action methods and grabs the data to populate customer tableviews using lambda 
+     * expressions and updating the tableviews with the changes.
      *
      * @param url
      * @param rb

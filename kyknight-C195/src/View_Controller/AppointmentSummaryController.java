@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The purpose of this controller file is to pull the appointemnt details of an appointment,
+when selected,  redirectes the user to the modify appointment controller and page, when called, 
+and deletes an appointment, when selected and called.
  */
 package View_Controller;
 
@@ -55,29 +55,6 @@ public class AppointmentSummaryController implements Initializable {
     private static int appIndexMod;
     
     /**
-     * Sets the language of the labels and text fields to the local language 
-     */
-    /*private void setLanguage(){
-        ResourceBundle rb = ResourceBundle.getBundle("AddModifyApp", Locale.getDefault());
-        appSumDateTableCol.setText(rb.getString("dateLabel"));
-        appSumTitleTableCol.setText(rb.getString("titleLabel"));
-        appSumContactTableCol.setText(rb.getString("contactLAbel"));
-        appSumAppDetailsButton.setText(rb.getString("appDetailsButton"));
-        appSumModAppButton.setText(rb.getString("modifyButton"));
-        appSumDeleteAppButton.setText(rb.getString("deleteButton"));
-        appSumExitButton.setText(rb.getString("exitButton"));
-        appSumTitleLabel.setText(rb.getString("titleLabel"));
-        appSumDescLabel.setText(rb.getString("descLabel"));
-        appSumLocationLabel.setText(rb.getString("locationLabel"));
-        appSumContactLabel.setText(rb.getString("contactLabel"));
-        appSumUrlLabel.setText(rb.getString("urlLabel"));
-        appSumDateLabel.setText(rb.getString("dateLabel"));
-        appSumStartLabel.setText(rb.getString("startLabel"));
-        appSumEndLabel.setText(rb.getString("endLabel"));
-        appSumCreatedByLabel.setText(rb.getString("createdByLabel"));
-    }*/
-    
-    /**
      * This method, when the Appointment Details button is selected, checks if there is an
      * appointment is selected. If not, returns error message in window. If so, displays the 
      * selected appointment details.
@@ -106,6 +83,12 @@ public class AppointmentSummaryController implements Initializable {
         }
     }
     
+    /**
+     * This method checks that an appointment is selected when the modify appointment button 
+     * is selected, when called. If not, alerts that the user needs to select an appointment
+     * to modify an appointment.
+     * @param event 
+     */
     private void AppSumModAppButtonPushed(ActionEvent event){
         Appointment appMod = appSumTableview.getSelectionModel().getSelectedItem();
         //is an appointment selected?
@@ -133,7 +116,7 @@ public class AppointmentSummaryController implements Initializable {
     
     /**
      * This method deletes an appointment, if selected, and checks to see if there is an
-     * appointment selected. If not, displays error message.
+     * appointment selected. If not selected an appointment, displays error message.
      * @param event 
      */
     private void AppSumDeleteButtonPushed(ActionEvent event){
@@ -151,7 +134,8 @@ public class AppointmentSummaryController implements Initializable {
     }
     
     /**
-     * This method, when cancel button is selected and 'OK' is selected, will redirect the user to the Main screen.
+     * This method, when cancel button is selected and 'OK' is selected, will redirect 
+     * the user to the Main Screen (MainScreen.fxml).
      * @param event 
      */
     private void AppSumExitButtonPushed(ActionEvent event){
@@ -161,7 +145,7 @@ public class AppointmentSummaryController implements Initializable {
     }
     
     /**
-     * This method returns the appointment index to modify
+     * This method returns the appointment index to be modified.
      * @return 
      */
     public static int getAppIndexMod(){
@@ -169,7 +153,7 @@ public class AppointmentSummaryController implements Initializable {
     }
     
     /**
-     * This method updates the table view
+     * This method updates the table view to be displayed, when called.
      */
     public void UpdateAddAppTableView(){
         updateAppList();
@@ -178,6 +162,8 @@ public class AppointmentSummaryController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
