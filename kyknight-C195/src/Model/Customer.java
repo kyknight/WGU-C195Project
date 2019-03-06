@@ -131,6 +131,9 @@ public class Customer {
     public String getCountry(){
         return this.country.get();
     }
+    public String getState(){
+        return this.state.get();
+    }
     
     /**
      * *****************
@@ -174,6 +177,9 @@ public class Customer {
     public void setCountry(String country){
         this.country.set(country);
     }
+    public void setState(String state){
+        this.state.set(state);
+    }
     
     /**
      * 
@@ -209,7 +215,6 @@ public class Customer {
         }
         if (state.length() == 0) {
             errorMessage = errorMessage + "The state field is required. \n";
-        } else {
         }
         return errorMessage;
     }

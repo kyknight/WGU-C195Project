@@ -14,9 +14,11 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -228,8 +230,14 @@ public class AddAppointmentController implements Initializable {
             endLocal = LocalDateTime.parse(appDate.toString() + " " + endHr + ":" + endMin + " " + endAmPm, localDateFormat);
         }
         //create ZonedDateTime with Date objects
-        ZonedDateTime startUTC = startLocal.atZone(ZoneId.of("UTC"));
-        ZonedDateTime endUTC = endLocal.atZone(ZoneId.of("UTC"));
+            //get the local zone id of user
+        ZoneId localZone = ZoneId.of(TimeZone.getDefault().getID());
+            //ensures myself that the time entered in by the user is set to their local time
+        ZonedDateTime startLocalTime = ZonedDateTime.of(startLocal, localZone);
+        ZonedDateTime endLocalTime = ZonedDateTime.of(endLocal, localZone);
+            //sets the user entered appointment start & end time to database time (UTC)
+        ZonedDateTime startUTC = startLocalTime.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime endUTC = endLocalTime.withZoneSameInstant(ZoneId.of("UTC"));
         //submits info to be added to DB and checks if 'true' is returned
         if (addNewApp(customer, title, desc, location, contact, url, startUTC, endUTC, type)) {
             try {

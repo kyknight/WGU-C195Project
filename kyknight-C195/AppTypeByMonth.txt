@@ -1,9 +1,6 @@
 Number of Appointment Types By Month: 
  
-2019-02: 5
-Types:  test2, stuff, help, helping, things
- 
-2019-03: 2
-Types:  not needed, Help needed my someone.
+2019-03: 3
+Types:  not needed, Help needed my someone., test1
  
 

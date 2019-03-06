@@ -61,10 +61,10 @@ public class MonthlyCalendarView {
         //days of the week array
         Text[] daysOfWeek;
         daysOfWeek = new Text[]{
-            new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"),
-            new Text("Friday"), new Text("Saturday"),
-            new Text("Sunday")
+            new Text("Sunday"), new Text("Monday"), 
+            new Text("Tuesday"), new Text("Wednesday"), 
+            new Text("Thursday"), new Text("Friday"), 
+            new Text("Saturday")
         };
         //days of week label panes
         GridPane dayLabels = new GridPane();
@@ -105,8 +105,8 @@ public class MonthlyCalendarView {
     public void PopCalendar(YearMonth yearMonth){
         //date to start calendar with
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
-        //search prior days one day at a time until there is a monday
-        while (!calendarDate.getDayOfWeek().toString().equals("MONDAY")){
+        //search prior days one day at a time until there is a sunday
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")){
             calendarDate = calendarDate.minusDays(1);
         }
         

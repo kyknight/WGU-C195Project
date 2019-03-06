@@ -97,7 +97,7 @@ public class AppointmentSummaryController implements Initializable {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("Please Select an appointment to modify an appointment.");
+            alert.setContentText("Please select an appointment to modify an appointment.");
             alert.showAndWait();
         }
         appIndexMod = getAppList().indexOf(appMod);

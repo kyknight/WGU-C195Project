@@ -261,7 +261,6 @@ public class MainScreenController implements Initializable {
      * @param event 
      */
     private void MainScreenExitButtonPushed(ActionEvent event){
-        ResourceBundle rb = ResourceBundle.getBundle("MainScreen", Locale.getDefault());
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Confirm Exit");

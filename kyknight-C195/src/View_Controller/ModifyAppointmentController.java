@@ -16,9 +16,11 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -151,7 +153,6 @@ public class ModifyAppointmentController{
             alert.setHeaderText("Error Modifying Appointment");
             alert.setContentText(errorMessage);
             alert.showAndWait();
-            return;
         }
         
         DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mm a");
@@ -163,14 +164,19 @@ public class ModifyAppointmentController{
             alert.setHeaderText("AM or PM selection.");
             alert.setContentText("Please select AM or PM for appointment time.");
             alert.showAndWait();
-            return;
         } else {
             startLocal = LocalDateTime.parse(appDate.toString() + " " + startHr + ":" + startMin + " " + startAmPm, localDateFormat);
             endLocal = LocalDateTime.parse(appDate.toString() + " " + endHr + ":" + endMin + " " + endAmPm, localDateFormat);
         }
         //create ZonedDateTime with Date objects
-        ZonedDateTime startUTC = startLocal.atZone(ZoneId.of("UTC"));
-        ZonedDateTime endUTC = endLocal.atZone(ZoneId.of("UTC"));
+            //get the local zone id of user
+        ZoneId localZone = ZoneId.of(TimeZone.getDefault().getID());
+            //ensures myself that the time entered in by the user is set to their local time
+        ZonedDateTime startLocalTime = ZonedDateTime.of(startLocal, localZone);
+        ZonedDateTime endLocalTime = ZonedDateTime.of(endLocal, localZone);
+            //sets the user entered appointment start & end time to database time (UTC)
+        ZonedDateTime startUTC = startLocalTime.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime endUTC = endLocalTime.withZoneSameInstant(ZoneId.of("UTC"));
         //submits info to be added to DB and checks if 'true' is returned
         if (modApp(appId,customer,title,desc,location,contact,url,startUTC,endUTC,type,userId,custId)) {
             try {
@@ -231,7 +237,7 @@ public class ModifyAppointmentController{
         String contact = appointment.getContact();
         String type = appointment.getType();
         String url = appointment.getUrl();
-        Date appDate = appointment.getStartTimestamp();
+        Date appDate = appointment.getStartTimestamp();//look!!
         
         // appDate to LocalDate
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());

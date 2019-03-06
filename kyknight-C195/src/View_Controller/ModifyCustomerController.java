@@ -82,7 +82,7 @@ public class ModifyCustomerController implements Initializable {
         }
         
         // saves the returned active status
-        int modifyCustomerChecker = modCustomer(customerID, custName, address1, address2, city, country, zip, phone);
+        int modifyCustomerChecker = modCustomer(customerID, custName, address1, address2, city, state, country, zip, phone);
         
         // if active status = 1, display alert dialog box.
         if (modifyCustomerChecker == 1){
@@ -94,7 +94,7 @@ public class ModifyCustomerController implements Initializable {
         } else if (modifyCustomerChecker == 0){
             int countryID = calcCountryId(country);
             int cityID = calcCityId(city, countryID);
-            int addressID = calcAddressId(address1, address2, zip, phone, cityID);
+            int addressID = calcAddressId(address1, address2, zip, phone, cityID, state);
             setCustToActive(custName, addressID);
         }
         
@@ -110,6 +110,10 @@ public class ModifyCustomerController implements Initializable {
         }
     }
     
+    /**
+     * This method redirects the user to the Main Screen (mainScreen.fxml), when called.
+     * @param event 
+     */
     private void ModifyCustomerCancelButtonPushed (ActionEvent event){
         //called the method from AddCustomerController.java because I'm lazy
         AddCustomerController cancelPushed = new AddCustomerController();
@@ -135,7 +139,7 @@ public class ModifyCustomerController implements Initializable {
         String address1 = customer.getAddress1();
         String address2 = customer.getAddress2();
         String city = customer.getCity();
-        //String state = customer.getState();
+        String state = customer.getState();
         String country = customer.getCountry();
         String zip = customer.getZipcode();
         String phone = customer.getPhone();
@@ -146,7 +150,7 @@ public class ModifyCustomerController implements Initializable {
         modifyCustomerAddress1TextField.setText(address1);
         modifyCustomerAddress2TextField.setText(address2);
         modifyCustomerCityTextField.setText(city);
-        //modifyCustomerStateTextField.setText(state);
+        modifyCustomerStateTextField.setText(state);
         modifyCustomerCountryTextField.setText(country);
         modifyCustomerZipTextField.setText(zip);
         modifyCustomerPhoneTextField.setText(phone);

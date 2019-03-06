@@ -61,10 +61,11 @@ public class WeeklyCalendarView {
         //days of the week array
         Text[] daysOfWeek;
         daysOfWeek = new Text[]{
-            new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"),
-            new Text("Friday"), new Text("Saturday"),
-            new Text("Sunday")
+            new Text("Sunday"), new Text("Monday"), 
+            new Text("Tuesday"), new Text("Wednesday"), 
+            new Text("Thursday"), new Text("Friday"), 
+            new Text("Saturday"),
+            
         };
         //days of the week label panes
         GridPane dayLabels = new GridPane();
@@ -105,8 +106,8 @@ public class WeeklyCalendarView {
     public void PopCalendar(LocalDate localDate){
         //date to start calendar with
         LocalDate calendarDate = localDate;
-        //search prior days one day at a time until there is a monday
-        while (!calendarDate.getDayOfWeek().toString().equals("MONDAY")) {
+        //search prior days one day at a time until there is a sunday
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
 

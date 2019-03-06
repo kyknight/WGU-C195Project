@@ -214,18 +214,20 @@ public class DBManager {
                 customer.setActive(active);
                 customer.setAddressId(addressId);
                 //gets the address info from db then sets to Customer object
-                ResultSet addressResultSet = stmt.executeQuery("SELECT address, address2, postalCode, phone, cityId FROM address WHERE addressId = '" + addressId +"'");
+                ResultSet addressResultSet = stmt.executeQuery("SELECT address, address2, postalCode, phone, cityId, state FROM address WHERE addressId = '" + addressId +"'");
                 addressResultSet.next();
                 String address = addressResultSet.getString(1);
                 String address2 = addressResultSet.getString(2);
                 String zipCode = addressResultSet.getString(3);
                 String phone = addressResultSet.getString(4);
                 int cityId = addressResultSet.getInt(5);
+                String state = addressResultSet.getString(6);
                 customer.setAddress1(address);
                 customer.setAddress2(address2);
                 customer.setZipCode(zipCode);
                 customer.setPhone(phone);
                 customer.setCityId(cityId);
+                customer.setState(state);
                 //gets the city info from db then sets to Customer object
                 ResultSet cityResultSet = stmt.executeQuery("SELECT city, countryId FROM city WHERE cityId = '" + cityId + "'");
                 cityResultSet.next();
@@ -260,17 +262,18 @@ public class DBManager {
      * @param address
      * @param address2
      * @param city
+     * @param state
      * @param country
      * @param zipCode
      * @param phone
      */
-    public static void addNewCust(String custName, String address, String address2, String city, String country,
+    public static void addNewCust(String custName, String address, String address2, String city, String state, String country,
             String zipCode, String phone) {
         //gets the Id's for country, city, and address
         try {
             int countryId = calcCountryId(country); 
             int cityId = calcCityId(city, countryId);
-            int addressId = calcAddressId(address, address2, zipCode, phone, cityId); 
+            int addressId = calcAddressId(address, address2, zipCode, phone, cityId, state); 
             //checks whether or not a customer is new or already exists in db
             if (checkIfCustExists(custName, addressId)) {
                 //db connection
@@ -399,13 +402,14 @@ public class DBManager {
      * @param zipCode
      * @param phone
      * @param cityId
+     * @param state
      * @return
      */
-    public static int calcAddressId(String address, String address2, String zipCode, String phone, int cityId) {
+    public static int calcAddressId(String address, String address2, String zipCode, String phone, int cityId, String state) {
         try (Connection conn = (Connection) DriverManager.getConnection(dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             ResultSet addressIdCheck = stmt.executeQuery("SELECT addressId FROM address WHERE address = '" + address + "' AND address2 = '" 
-                    + address2 + "' AND postalCode = '" + zipCode + "' AND phone = '" + phone + "' AND cityId = '" + cityId + "'");
+                    + address2 + "' AND postalCode = '" + zipCode + "' AND phone = '" + phone + "' AND cityId = '" + cityId + "' AND state = '" + state + "'");
             //checks if already exits then returns countryId if it does
             if (addressIdCheck.next()) {
                 int addressId = addressIdCheck.getInt(1);
@@ -424,8 +428,8 @@ public class DBManager {
                     addressId = 1;
                 }
                 //creates new entry with new addressId value
-                stmt.executeUpdate("INSERT INTO address VALUES ('" + addressId + "', '" + address + "', '" + address2 + "', '" + cityId + "', "
-                        + "'" + zipCode + "', '" + phone + "', CURRENT_DATE, '" + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "')");
+                stmt.executeUpdate("INSERT INTO address VALUES ('" + addressId + "', '" + address + "', '" + address2 + "', '" + cityId + "', '" 
+                        + zipCode + "', '" + phone + "', CURRENT_DATE, '" + currUser + "', CURRENT_TIMESTAMP, '" + currUser + "', '" + state + "')");
                 return addressId;
             }
         } catch (SQLException e) {
@@ -524,17 +528,18 @@ public class DBManager {
      * @param address
      * @param address2
      * @param city
+     * @param state
      * @param country
      * @param zipCode
      * @param phone
      * @return
      */
     public static int modCustomer(int custId, String custName, String address, String address2,
-            String city, String country, String zipCode, String phone) {
+            String city, String state, String country, String zipCode, String phone) {
         try {
             int countryId = calcCountryId(country);
             int cityId = calcCityId(city, countryId);
-            int addressId = calcAddressId(address, address2, zipCode, phone, cityId);
+            int addressId = calcAddressId(address, address2, zipCode, phone, cityId, state);
             //checks if customer already exists in the dd
             if (checkIfCustExists(custName, addressId)) {
                 //if customer already exists, get custId and use custId to get and return their active status
@@ -851,7 +856,7 @@ public class DBManager {
             } else {
                 // If overlap doesn't occur, update appointment entry and return true
                 int customerId = customer.getCustId();
-                updateApp(appId, customerId, title, desc, location, contact, url, startTimestamp, endTimestamp);
+                updateApp(appId, customerId, title, desc, location, contact, url, startTimestamp, endTimestamp, type);
                 return true;
             }
         } catch (Exception e) {
@@ -880,12 +885,12 @@ public class DBManager {
      * @throws SQLException
      */
     private static void updateApp(int appId, int custId, String title, String desc, String location, String contact,
-            String url, Timestamp startTimestamp, Timestamp endTimestamp) throws SQLException {
+            String url, Timestamp startTimestamp, Timestamp endTimestamp, String type) throws SQLException {
         try (Connection conn = (Connection) DriverManager.getConnection(DBManager.dbUrl, user, pass);
                 Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("UPDATE appointment SET customerId = '" + custId + "', title = '" + title + "', description = '" + desc + "', location = '" 
                     + location + "', contact = '" + contact + "', url = '" + url + "', start = '" + startTimestamp + "', end = '" + endTimestamp + 
-                    "', lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = '" + currUser + "' WHERE appointmentId = '" + appId + "'");
+                    "', lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = '" + currUser + "', type = '" + type + "' WHERE appointmentId = '" + appId + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

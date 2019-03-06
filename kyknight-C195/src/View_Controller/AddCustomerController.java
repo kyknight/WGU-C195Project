@@ -55,10 +55,10 @@ public class AddCustomerController implements Initializable {
         String address1 = addCustomerAddress1TextField.getText();
         String address2 = addCustomerAddress2TextField.getText();
         String city = addCustomerCityTextField.getText();
-        String zip = addCustomerZipTextField.getText();
-        String country = addCustomerCountryTextField.getText();
-        String phone = addCustomerPhoneTextField.getText();
         String state = addCustomerStateTextField.getText();
+        String country = addCustomerCountryTextField.getText();
+        String zip = addCustomerZipTextField.getText();
+        String phone = addCustomerPhoneTextField.getText();
         
         //customer validation
         String errorMessage = Customer.isCustValid(custName, address1, city, zip, country, phone, state);
@@ -75,7 +75,7 @@ public class AddCustomerController implements Initializable {
         
         //if errorMessage = false, add the new customer to the DB and return to the main screen.
         try {
-            addNewCust(custName, address1, address2, city, zip, country, phone);
+            addNewCust(custName, address1, address2, city, state, country, zip, phone);
             Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
             Scene mainScreenScene = new Scene(mainScreenParent);
             Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
